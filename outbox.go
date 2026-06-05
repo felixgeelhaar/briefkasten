@@ -231,3 +231,23 @@ func (o *Outbox) find(id string) (OutboundMessage, error) {
 	}
 	return OutboundMessage{}, fmt.Errorf("%w: %s", ErrBadID, id)
 }
+
+// Summary returns the outbox ids grouped by lifecycle state.
+func (o *Outbox) Summary() (map[string][]string, error) {
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	out := map[string][]string{}
+	for _, state := range outboxStates {
+		files, err := filepath.Glob(filepath.Join(o.root, state, "*.json"))
+		if err != nil {
+			return nil, fmt.Errorf("outbox summary: %w", err)
+		}
+		ids := make([]string, 0, len(files))
+		for _, f := range files {
+			base := filepath.Base(f)
+			ids = append(ids, base[:len(base)-len(".json")])
+		}
+		out[state] = ids
+	}
+	return out, nil
+}

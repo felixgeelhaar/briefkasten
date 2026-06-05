@@ -63,6 +63,7 @@ func NewConfigServer(cfg *Config) (*mcp.Server, *Outbox, error) {
 	if ob != nil {
 		registerSendTools(srv, ob)
 	}
+	RegisterResources(srv, sw, ob)
 	return srv, ob, nil
 }
 
