@@ -42,19 +42,10 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      # nox lives in a private repo: the job runs when a NOX_PAT secret
-      # grants access and is a no-op otherwise (local enforcement stays:
-      # `nox install-hook`).
       - name: nox scan (fail on unwaived)
-        env:
-          NOX_PAT: ${{ secrets.NOX_PAT }}
         run: |
-          if [ -z "$NOX_PAT" ]; then
-            echo "NOX_PAT secret not configured — skipping security scan (enforced locally via pre-commit hook)."
-            exit 0
-          fi
-          git config --global url."https://${NOX_PAT}@github.com/".insteadOf "https://github.com/"
-          GOPRIVATE=github.com/felixgeelhaar/nox go install github.com/felixgeelhaar/nox/cmd/nox@latest
+          go install github.com/nox-hq/nox/cli@latest
+          mv "$(go env GOPATH)/bin/cli" "$(go env GOPATH)/bin/nox"
           nox scan . --vex vex.json -fail-on-unwaived
 
   build:
