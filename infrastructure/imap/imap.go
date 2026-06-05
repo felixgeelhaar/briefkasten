@@ -1,6 +1,10 @@
-package briefkasten
+// Package imap is the IMAP backend (go-imap v2).
+package imap
 
 import (
+	"github.com/felixgeelhaar/briefkasten/domain"
+	"github.com/felixgeelhaar/briefkasten/infrastructure/auth"
+
 	"context"
 	"crypto/tls"
 	"errors"
@@ -11,8 +15,8 @@ import (
 	"github.com/emersion/go-imap/v2/imapclient"
 )
 
-// IMAPConfig configures an IMAPMailbox.
-type IMAPConfig struct {
+// Config configures an Mailbox.
+type Config struct {
 	// Addr is the IMAP server address (host:port). Required.
 	Addr string
 	// Username and Password authenticate via LOGIN.
@@ -25,10 +29,10 @@ type IMAPConfig struct {
 	// TLSConfig optionally overrides the TLS client configuration.
 	TLSConfig *tls.Config
 	// OAuth2 switches authentication from LOGIN to XOAUTH2/OAUTHBEARER.
-	OAuth2 *OAuth2Settings
+	OAuth2 *auth.OAuth2Settings
 }
 
-// IMAPMailbox is a Mailbox backed by an IMAP server (go-imap v2).
+// Mailbox is a Mailbox backed by an IMAP server (go-imap v2).
 //
 // Ids are message UIDs in the configured mailbox. Each call dials a fresh
 // connection and logs out afterwards — no connection state is kept, so the
@@ -37,23 +41,23 @@ type IMAPConfig struct {
 // ListUnread issues UID SEARCH UNSEEN, Fetch reads BODY.PEEK[] (the \Seen
 // flag is NOT set by fetching), and MarkSeen stores +FLAGS \Seen — seen
 // messages simply stop being listed; nothing is ever deleted.
-type IMAPMailbox struct {
-	cfg IMAPConfig
+type Mailbox struct {
+	cfg Config
 }
 
-// NewIMAPMailbox validates cfg and returns an IMAPMailbox.
-func NewIMAPMailbox(cfg IMAPConfig) (*IMAPMailbox, error) {
+// New validates cfg and returns an Mailbox.
+func New(cfg Config) (*Mailbox, error) {
 	if cfg.Addr == "" {
 		return nil, errors.New("imap: Addr is required")
 	}
 	if cfg.Mailbox == "" {
 		cfg.Mailbox = "INBOX"
 	}
-	return &IMAPMailbox{cfg: cfg}, nil
+	return &Mailbox{cfg: cfg}, nil
 }
 
 // dial connects, logs in, and selects the configured mailbox.
-func (m *IMAPMailbox) dial() (*imapclient.Client, error) {
+func (m *Mailbox) dial() (*imapclient.Client, error) {
 	var (
 		c   *imapclient.Client
 		err error
@@ -67,8 +71,8 @@ func (m *IMAPMailbox) dial() (*imapclient.Client, error) {
 		return nil, fmt.Errorf("imap: dial %s: %w", m.cfg.Addr, err)
 	}
 	if m.cfg.OAuth2 != nil {
-		host, port := splitHostPort(m.cfg.Addr, 993)
-		auth, err := m.cfg.OAuth2.saslClient(context.Background(), m.cfg.Username, host, port)
+		host, port := auth.SplitHostPort(m.cfg.Addr, 993)
+		auth, err := m.cfg.OAuth2.SASLClient(context.Background(), m.cfg.Username, host, port)
 		if err != nil {
 			_ = c.Close()
 			return nil, err
@@ -94,7 +98,7 @@ func closeClient(c *imapclient.Client) {
 }
 
 // ListUnread returns the UIDs of unseen messages.
-func (m *IMAPMailbox) ListUnread() ([]string, error) {
+func (m *Mailbox) ListUnread() ([]string, error) {
 	c, err := m.dial()
 	if err != nil {
 		return nil, err
@@ -118,7 +122,7 @@ func (m *IMAPMailbox) ListUnread() ([]string, error) {
 
 // Fetch returns the raw RFC 5322 bytes of the message with the given UID.
 // It peeks — fetching does not mark the message seen.
-func (m *IMAPMailbox) Fetch(id string) ([]byte, error) {
+func (m *Mailbox) Fetch(id string) ([]byte, error) {
 	uid, err := parseUID(id)
 	if err != nil {
 		return nil, err
@@ -139,7 +143,7 @@ func (m *IMAPMailbox) Fetch(id string) ([]byte, error) {
 		return nil, fmt.Errorf("imap: fetch %s: %w", id, err)
 	}
 	if len(msgs) == 0 {
-		return nil, fmt.Errorf("%w: %s", ErrBadID, id)
+		return nil, fmt.Errorf("%w: %s", domain.ErrBadID, id)
 	}
 	raw := msgs[0].FindBodySection(section)
 	if raw == nil {
@@ -149,7 +153,7 @@ func (m *IMAPMailbox) Fetch(id string) ([]byte, error) {
 }
 
 // Search returns unseen UIDs matching the query (UID SEARCH UNSEEN TEXT).
-func (m *IMAPMailbox) Search(query string) ([]string, error) {
+func (m *Mailbox) Search(query string) ([]string, error) {
 	c, err := m.dial()
 	if err != nil {
 		return nil, err
@@ -171,10 +175,10 @@ func (m *IMAPMailbox) Search(query string) ([]string, error) {
 	return ids, nil
 }
 
-var _ Searcher = (*IMAPMailbox)(nil)
+var _ domain.Searcher = (*Mailbox)(nil)
 
 // Folders lists the server's mailboxes (LIST "" "*").
-func (m *IMAPMailbox) Folders() ([]string, error) {
+func (m *Mailbox) Folders() ([]string, error) {
 	c, err := m.dial()
 	if err != nil {
 		return nil, err
@@ -192,20 +196,20 @@ func (m *IMAPMailbox) Folders() ([]string, error) {
 	return out, nil
 }
 
-// InFolder returns an IMAPMailbox scoped to the named mailbox.
-func (m *IMAPMailbox) InFolder(name string) (Mailbox, error) {
+// InFolder returns an Mailbox scoped to the named mailbox.
+func (m *Mailbox) InFolder(name string) (domain.Mailbox, error) {
 	if name == "" {
 		return nil, errors.New("imap: folder name required")
 	}
 	cfg := m.cfg
 	cfg.Mailbox = name
-	return &IMAPMailbox{cfg: cfg}, nil
+	return &Mailbox{cfg: cfg}, nil
 }
 
-var _ FolderMailbox = (*IMAPMailbox)(nil)
+var _ domain.FolderMailbox = (*Mailbox)(nil)
 
 // MarkSeen sets the \Seen flag on the message with the given UID.
-func (m *IMAPMailbox) MarkSeen(id string) error {
+func (m *Mailbox) MarkSeen(id string) error {
 	uid, err := parseUID(id)
 	if err != nil {
 		return err
@@ -230,7 +234,7 @@ func (m *IMAPMailbox) MarkSeen(id string) error {
 // fileTo copies a message into the named folder (created when missing)
 // and marks the original seen. Deliberately not MOVE: MOVE expunges the
 // source, and briefkasten never expunges — the original survives, seen.
-func (m *IMAPMailbox) fileTo(folder, id string) error {
+func (m *Mailbox) fileTo(folder, id string) error {
 	uid, err := parseUID(id)
 	if err != nil {
 		return err
@@ -260,21 +264,21 @@ func (m *IMAPMailbox) fileTo(folder, id string) error {
 
 // Archive files the message into the Archive folder (created when
 // missing); the original is marked seen, never expunged.
-func (m *IMAPMailbox) Archive(id string) error { return m.fileTo("Archive", id) }
+func (m *Mailbox) Archive(id string) error { return m.fileTo("Archive", id) }
 
 // Delete files the message into the Trash folder — a soft delete; real
 // removal stays with the mail provider's retention, briefkasten never
 // expunges.
-func (m *IMAPMailbox) Delete(id string) error { return m.fileTo("Trash", id) }
+func (m *Mailbox) Delete(id string) error { return m.fileTo("Trash", id) }
 
-var _ Curator = (*IMAPMailbox)(nil)
+var _ domain.Curator = (*Mailbox)(nil)
 
 func parseUID(id string) (imap.UID, error) {
 	n, err := strconv.ParseUint(id, 10, 32)
 	if err != nil || n == 0 {
-		return 0, fmt.Errorf("%w: %s", ErrBadID, id)
+		return 0, fmt.Errorf("%w: %s", domain.ErrBadID, id)
 	}
 	return imap.UID(n), nil
 }
 
-var _ Mailbox = (*IMAPMailbox)(nil)
+var _ domain.Mailbox = (*Mailbox)(nil)

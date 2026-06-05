@@ -1,55 +1,27 @@
-package briefkasten
+package mcpserver
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"sort"
 	"strings"
 
+	mcp "github.com/felixgeelhaar/mcp-go"
 	"github.com/felixgeelhaar/mcp-go/server"
+
+	"github.com/felixgeelhaar/briefkasten/application"
 )
 
-// RegisterResources exposes the mailbox and outbox as MCP resources:
-//
-//	email://inbox          unread summary (JSON)
-//	email://inbox/{id}     raw RFC 5322 message
-//	email://outbox         per-state id summary (JSON)
-//	email://outbox/{id}    outbound message status (JSON)
-//
-// Hosts read state directly instead of spending tool calls; {id} arguments
-// complete from live data. ob may be nil when sending is not configured —
-// the outbox resources then report an empty outbox.
-func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox, serverOpts ...ServerOption) {
-	opts := &serverOptions{}
-	for _, opt := range serverOpts {
-		opt(opts)
-	}
-
-	srv.Resource("email://accounts").
-		Name("Accounts").
-		Description("Configured mailbox accounts; \"default\" is the primary.").
-		MimeType("application/json").
-		Handler(func(_ context.Context, uri string, _ map[string]string) (*server.ResourceContent, error) {
-			names := []string{"default"}
-			for name := range opts.accounts {
-				names = append(names, name)
-			}
-			sort.Strings(names[1:])
-			return jsonResource(uri, map[string]any{"accounts": names})
-		})
-
+// registerResources exposes mailbox and outbox state as MCP resources —
+// all reads route through the application service.
+func registerResources(srv *mcp.Server, svc *application.Service, ob *application.Outbox) {
 	srv.Resource("email://inbox").
 		Name("Inbox").
 		Description("Unread message ids in the mailbox.").
 		MimeType("application/json").
 		Handler(func(_ context.Context, uri string, _ map[string]string) (*server.ResourceContent, error) {
-			ids, err := mb.ListUnread()
+			ids, err := svc.ListUnread("", "")
 			if err != nil {
 				return nil, err
-			}
-			if ids == nil {
-				ids = []string{}
 			}
 			return jsonResource(uri, map[string]any{"unread": ids})
 		})
@@ -59,7 +31,7 @@ func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox, serverOpts ..
 		Description("Raw RFC 5322 message by unread id.").
 		MimeType("message/rfc822").
 		Handler(func(_ context.Context, uri string, params map[string]string) (*server.ResourceContent, error) {
-			raw, err := mb.Fetch(params["id"])
+			raw, err := svc.Read("", "", params["id"])
 			if err != nil {
 				return nil, err
 			}
@@ -68,7 +40,7 @@ func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox, serverOpts ..
 
 	srv.ResourceCompletion("email://inbox/{id}").
 		Handler(func(_ context.Context, _ server.CompletionRef, arg server.CompletionArgument) (*server.CompletionResult, error) {
-			ids, err := mb.ListUnread()
+			ids, err := svc.ListUnread("", "")
 			if err != nil {
 				return nil, err
 			}
@@ -86,15 +58,19 @@ func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox, serverOpts ..
 		Description("Available mailbox folders.").
 		MimeType("application/json").
 		Handler(func(_ context.Context, uri string, _ map[string]string) (*server.ResourceContent, error) {
-			folders := []string{"INBOX"}
-			if fm, ok := mb.(FolderMailbox); ok {
-				var err error
-				folders, err = fm.Folders()
-				if err != nil {
-					return nil, err
-				}
+			folders, err := svc.Folders("")
+			if err != nil {
+				return nil, err
 			}
 			return jsonResource(uri, map[string]any{"folders": folders})
+		})
+
+	srv.Resource("email://accounts").
+		Name("Accounts").
+		Description("Configured mailbox accounts; \"default\" is the primary.").
+		MimeType("application/json").
+		Handler(func(_ context.Context, uri string, _ map[string]string) (*server.ResourceContent, error) {
+			return jsonResource(uri, map[string]any{"accounts": svc.Accounts()})
 		})
 
 	srv.Resource("email://outbox").
@@ -118,7 +94,7 @@ func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox, serverOpts ..
 		MimeType("application/json").
 		Handler(func(_ context.Context, uri string, params map[string]string) (*server.ResourceContent, error) {
 			if ob == nil {
-				return nil, fmt.Errorf("%w: outbox not configured", ErrBadID)
+				return nil, errNoOutbox
 			}
 			msg, err := ob.Status(params["id"])
 			if err != nil {

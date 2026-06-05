@@ -1,10 +1,10 @@
-package briefkasten
+package resilience
 
 import (
+	"github.com/felixgeelhaar/briefkasten/domain"
+
 	"errors"
 	"fmt"
-	"os"
-	"path/filepath"
 	"sync"
 	"testing"
 	"time"
@@ -52,7 +52,7 @@ func (f *flakyMailbox) calls() int {
 
 func TestResilientRetriesTransientFailure(t *testing.T) {
 	mb := &flakyMailbox{failures: 2}
-	r := Resilient(mb, ResilienceConfig{InitialDelay: time.Millisecond})
+	r := Wrap(mb, Config{InitialDelay: time.Millisecond})
 
 	ids, err := r.ListUnread()
 	if err != nil {
@@ -67,18 +67,18 @@ func TestResilientRetriesTransientFailure(t *testing.T) {
 }
 
 func TestResilientDoesNotRetryBadID(t *testing.T) {
-	mb := &flakyMailbox{fetchErr: fmt.Errorf("%w: nope", ErrBadID)}
-	r := Resilient(mb, ResilienceConfig{InitialDelay: time.Millisecond})
+	mb := &flakyMailbox{fetchErr: fmt.Errorf("%w: nope", domain.ErrBadID)}
+	r := Wrap(mb, Config{InitialDelay: time.Millisecond})
 
 	_, err := r.Fetch("nope")
-	if !errors.Is(err, ErrBadID) {
-		t.Fatalf("err = %v, want ErrBadID", err)
+	if !errors.Is(err, domain.ErrBadID) {
+		t.Fatalf("err = %v, want domain.ErrBadID", err)
 	}
 }
 
 func TestResilientCircuitOpensAfterConsecutiveFailures(t *testing.T) {
 	mb := &flakyMailbox{failures: 1000}
-	r := Resilient(mb, ResilienceConfig{InitialDelay: time.Millisecond, MaxAttempts: 1})
+	r := Wrap(mb, Config{InitialDelay: time.Millisecond, MaxAttempts: 1})
 
 	// Default trip threshold is 5 consecutive failures.
 	for i := 0; i < 5; i++ {
@@ -97,7 +97,7 @@ func TestResilientCircuitOpensAfterConsecutiveFailures(t *testing.T) {
 
 func TestResilientTimesOutSlowBackend(t *testing.T) {
 	mb := &flakyMailbox{slow: 200 * time.Millisecond}
-	r := Resilient(mb, ResilienceConfig{
+	r := Wrap(mb, Config{
 		OpTimeout:    20 * time.Millisecond,
 		MaxAttempts:  1,
 		InitialDelay: time.Millisecond,
@@ -106,42 +106,5 @@ func TestResilientTimesOutSlowBackend(t *testing.T) {
 	_, err := r.ListUnread()
 	if !errors.Is(err, ferrors.ErrTimeout) {
 		t.Fatalf("err = %v, want ErrTimeout", err)
-	}
-}
-
-func TestBuildMailboxWrapsIMAPInResilience(t *testing.T) {
-	cfg, _ := LoadConfig("")
-	cfg.IMAP.Addr = "imap.example.org:993"
-	mb, _, err := cfg.BuildMailbox()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, ok := mb.(*ResilientMailbox); !ok {
-		t.Errorf("imap backend = %T, want *ResilientMailbox", mb)
-	}
-}
-
-func TestResilientForwardsCapabilities(t *testing.T) {
-	mb, root := newDir(t)
-	if err := os.MkdirAll(filepath.Join(root, "steuern", "new"), 0o755); err != nil {
-		t.Fatal(err)
-	}
-	drop(t, root, "a.eml", "From: x@y.z\r\nSubject: Spende\r\n\r\nDanke")
-	r := Resilient(mb, ResilienceConfig{InitialDelay: time.Millisecond})
-
-	folders, err := r.Folders()
-	if err != nil || len(folders) < 2 {
-		t.Errorf("folders = %v err = %v", folders, err)
-	}
-	ids, err := r.Search("Spende")
-	if err != nil || len(ids) != 1 {
-		t.Errorf("search = %v err = %v", ids, err)
-	}
-	scoped, err := r.InFolder("steuern")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, ok := scoped.(*ResilientMailbox); !ok {
-		t.Errorf("scoped = %T, want resilience-wrapped", scoped)
 	}
 }

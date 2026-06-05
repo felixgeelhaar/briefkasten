@@ -1,6 +1,10 @@
-package briefkasten
+package application_test
 
 import (
+	"github.com/felixgeelhaar/briefkasten/application"
+	"github.com/felixgeelhaar/briefkasten/domain"
+	"github.com/felixgeelhaar/briefkasten/infrastructure/maildir"
+
 	"context"
 	"errors"
 	"os"
@@ -11,11 +15,11 @@ import (
 
 // fakeSender records deliveries and fails on demand.
 type fakeSender struct {
-	sent []OutboundMessage
+	sent []domain.OutboundMessage
 	err  error
 }
 
-func (f *fakeSender) Send(_ context.Context, msg OutboundMessage) error {
+func (f *fakeSender) Send(_ context.Context, msg domain.OutboundMessage) error {
 	if f.err != nil {
 		return f.err
 	}
@@ -23,20 +27,11 @@ func (f *fakeSender) Send(_ context.Context, msg OutboundMessage) error {
 	return nil
 }
 
-func newOutbox(t *testing.T, sender Sender) *Outbox {
-	t.Helper()
-	ob, err := NewOutbox(t.TempDir(), sender)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return ob
-}
-
 func TestOutboxEnqueueAndDeliver(t *testing.T) {
 	sender := &fakeSender{}
-	ob := newOutbox(t, sender)
+	ob := newDirOutbox(t, sender)
 
-	id, err := ob.Enqueue(OutboundMessage{
+	id, err := ob.Enqueue(domain.OutboundMessage{
 		To:      []string{"steuerberater@kanzlei.example"},
 		Subject: "Unterlagen 2025",
 		Body:    "Anbei die fehlenden Belege.",
@@ -81,9 +76,9 @@ func TestOutboxEnqueueAndDeliver(t *testing.T) {
 
 func TestOutboxFailureKeepsMessageWithError(t *testing.T) {
 	sender := &fakeSender{err: errors.New("smtp down")}
-	ob := newOutbox(t, sender)
+	ob := newDirOutbox(t, sender)
 
-	id, err := ob.Enqueue(OutboundMessage{To: []string{"a@b.c"}, Subject: "x", Body: "y"})
+	id, err := ob.Enqueue(domain.OutboundMessage{To: []string{"a@b.c"}, Subject: "x", Body: "y"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,9 +119,9 @@ func TestOutboxFailureKeepsMessageWithError(t *testing.T) {
 }
 
 func TestOutboxInvalidTransitionsRejected(t *testing.T) {
-	ob := newOutbox(t, &fakeSender{})
+	ob := newDirOutbox(t, &fakeSender{})
 
-	id, err := ob.Enqueue(OutboundMessage{To: []string{"a@b.c"}, Subject: "x", Body: "y"})
+	id, err := ob.Enqueue(domain.OutboundMessage{To: []string{"a@b.c"}, Subject: "x", Body: "y"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -145,8 +140,8 @@ func TestOutboxInvalidTransitionsRejected(t *testing.T) {
 }
 
 func TestOutboxEnqueueValidation(t *testing.T) {
-	ob := newOutbox(t, &fakeSender{})
-	if _, err := ob.Enqueue(OutboundMessage{Subject: "no recipient"}); err == nil {
+	ob := newDirOutbox(t, &fakeSender{})
+	if _, err := ob.Enqueue(domain.OutboundMessage{Subject: "no recipient"}); err == nil {
 		t.Error("message without recipients accepted")
 	}
 }
@@ -155,20 +150,14 @@ func TestOutboxSurvivesRestart(t *testing.T) {
 	dir := t.TempDir()
 	sender := &fakeSender{}
 
-	ob1, err := NewOutbox(dir, sender)
-	if err != nil {
-		t.Fatal(err)
-	}
-	id, err := ob1.Enqueue(OutboundMessage{To: []string{"a@b.c"}, Subject: "persist", Body: "me"})
+	ob1 := newDirOutboxAt(t, dir, sender)
+	id, err := ob1.Enqueue(domain.OutboundMessage{To: []string{"a@b.c"}, Subject: "persist", Body: "me"})
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// New instance over the same dir sees and delivers the queued message.
-	ob2, err := NewOutbox(dir, sender)
-	if err != nil {
-		t.Fatal(err)
-	}
+	ob2 := newDirOutboxAt(t, dir, sender)
 	if _, err := ob2.ProcessOnce(context.Background()); err != nil {
 		t.Fatal(err)
 	}
@@ -182,23 +171,23 @@ func TestOutboxSurvivesRestart(t *testing.T) {
 }
 
 func TestOutboxStatusUnknownID(t *testing.T) {
-	ob := newOutbox(t, &fakeSender{})
-	if _, err := ob.Status("nope"); !errors.Is(err, ErrBadID) {
-		t.Errorf("err = %v, want ErrBadID", err)
+	ob := newDirOutbox(t, &fakeSender{})
+	if _, err := ob.Status("nope"); !errors.Is(err, domain.ErrBadID) {
+		t.Errorf("err = %v, want domain.ErrBadID", err)
 	}
-	if _, err := ob.Status("../../etc/passwd"); !errors.Is(err, ErrBadID) {
-		t.Errorf("traversal err = %v, want ErrBadID", err)
+	if _, err := ob.Status("../../etc/passwd"); !errors.Is(err, domain.ErrBadID) {
+		t.Errorf("traversal err = %v, want domain.ErrBadID", err)
 	}
 }
 
 func TestDirSenderDeliversIntoMaildir(t *testing.T) {
 	target := t.TempDir()
-	sender, err := NewDirSender(target, "nexa@local.example")
+	sender, err := maildir.NewSender(target, "nexa@local.example")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = sender.Send(context.Background(), OutboundMessage{
+	err = sender.Send(context.Background(), domain.OutboundMessage{
 		ID:      "m-1",
 		To:      []string{"alice@web-acme.de"},
 		Subject: "Grüße",
@@ -223,4 +212,18 @@ func TestDirSenderDeliversIntoMaildir(t *testing.T) {
 	if !strings.Contains(string(raw), "Subject: ") {
 		t.Errorf("no subject header:\n%s", raw)
 	}
+}
+
+func newDirOutbox(t *testing.T, sender domain.Sender) *application.Outbox {
+	t.Helper()
+	return newDirOutboxAt(t, t.TempDir(), sender)
+}
+
+func newDirOutboxAt(t *testing.T, dir string, sender domain.Sender) *application.Outbox {
+	t.Helper()
+	store, err := maildir.NewOutboxStore(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return application.NewOutbox(store, sender)
 }

@@ -1,6 +1,12 @@
-package briefkasten
+// Package resilience decorates remote backends with fortify patterns.
+package resilience
 
 import (
+	"bytes"
+	"strings"
+
+	"github.com/felixgeelhaar/briefkasten/domain"
+
 	"context"
 	"errors"
 	"time"
@@ -10,9 +16,9 @@ import (
 	"github.com/felixgeelhaar/fortify/timeout"
 )
 
-// ResilienceConfig tunes the fortify patterns around a remote backend.
+// Config tunes the fortify patterns around a remote backend.
 // The zero value gives sensible production defaults.
-type ResilienceConfig struct {
+type Config struct {
 	// OpTimeout bounds a single backend call (default 30s).
 	OpTimeout time.Duration
 	// MaxAttempts is the total number of attempts per call, including the
@@ -23,13 +29,13 @@ type ResilienceConfig struct {
 	InitialDelay time.Duration
 }
 
-// ResilientMailbox decorates a Mailbox with fortify resilience patterns:
+// Mailbox decorates a Mailbox with fortify resilience patterns:
 // a per-call timeout, retry with exponential backoff for transient
 // failures, and a circuit breaker that fast-fails while the backend is
-// down. ErrBadID is never retried and never trips the breaker — a bad id
+// down. domain.ErrBadID is never retried and never trips the breaker — a bad id
 // is the caller's mistake, not a backend fault.
-type ResilientMailbox struct {
-	mb Mailbox
+type Mailbox struct {
+	mb domain.Mailbox
 	cb circuitbreaker.CircuitBreaker[any]
 	rt retry.Retry[any]
 	to timeout.Timeout[any]
@@ -37,22 +43,22 @@ type ResilientMailbox struct {
 }
 
 // Resilient wraps mb with timeout, retry, and circuit breaker.
-func Resilient(mb Mailbox, cfg ResilienceConfig) *ResilientMailbox {
+func Wrap(mb domain.Mailbox, cfg Config) *Mailbox {
 	if cfg.OpTimeout <= 0 {
 		cfg.OpTimeout = 30 * time.Second
 	}
-	return &ResilientMailbox{
+	return &Mailbox{
 		mb: mb,
 		cb: circuitbreaker.New[any](circuitbreaker.Config{
 			IsSuccessful: func(err error) bool {
 				// Caller errors are not backend health signals.
-				return err == nil || errors.Is(err, ErrBadID)
+				return err == nil || errors.Is(err, domain.ErrBadID)
 			},
 		}),
 		rt: retry.New[any](retry.Config{
 			MaxAttempts:        cfg.MaxAttempts,
 			InitialDelay:       cfg.InitialDelay,
-			NonRetryableErrors: []error{ErrBadID},
+			NonRetryableErrors: []error{domain.ErrBadID},
 			Jitter:             true,
 		}),
 		to: timeout.New[any](timeout.Config{}),
@@ -62,7 +68,7 @@ func Resilient(mb Mailbox, cfg ResilienceConfig) *ResilientMailbox {
 
 // execute runs fn as breaker(retry(timeout(fn))): the breaker sees the
 // final outcome after retries, each attempt individually bounded.
-func (r *ResilientMailbox) execute(fn func() (any, error)) (any, error) {
+func (r *Mailbox) execute(fn func() (any, error)) (any, error) {
 	ctx := context.Background()
 	return r.cb.Execute(ctx, func(ctx context.Context) (any, error) {
 		return r.rt.Execute(ctx, func(ctx context.Context) (any, error) {
@@ -73,7 +79,7 @@ func (r *ResilientMailbox) execute(fn func() (any, error)) (any, error) {
 	})
 }
 
-func (r *ResilientMailbox) ListUnread() ([]string, error) {
+func (r *Mailbox) ListUnread() ([]string, error) {
 	v, err := r.execute(func() (any, error) { return r.mb.ListUnread() })
 	if err != nil {
 		return nil, err
@@ -81,7 +87,7 @@ func (r *ResilientMailbox) ListUnread() ([]string, error) {
 	return v.([]string), nil
 }
 
-func (r *ResilientMailbox) Fetch(id string) ([]byte, error) {
+func (r *Mailbox) Fetch(id string) ([]byte, error) {
 	v, err := r.execute(func() (any, error) { return r.mb.Fetch(id) })
 	if err != nil {
 		return nil, err
@@ -89,15 +95,15 @@ func (r *ResilientMailbox) Fetch(id string) ([]byte, error) {
 	return v.([]byte), nil
 }
 
-func (r *ResilientMailbox) MarkSeen(id string) error {
+func (r *Mailbox) MarkSeen(id string) error {
 	_, err := r.execute(func() (any, error) { return nil, r.mb.MarkSeen(id) })
 	return err
 }
 
-// Search forwards to the wrapped backend's Searcher (or the generic
+// Search forwards to the wrapped backend's domain.Searcher (or the generic
 // fallback), guarded by the same resilience pipeline.
-func (r *ResilientMailbox) Search(query string) ([]string, error) {
-	v, err := r.execute(func() (any, error) { return searchMailbox(r.mb, query) })
+func (r *Mailbox) Search(query string) ([]string, error) {
+	v, err := r.execute(func() (any, error) { return searchFallback(r.mb, query) })
 	if err != nil {
 		return nil, err
 	}
@@ -105,8 +111,8 @@ func (r *ResilientMailbox) Search(query string) ([]string, error) {
 }
 
 // Folders forwards to the wrapped backend when it supports folders.
-func (r *ResilientMailbox) Folders() ([]string, error) {
-	fm, ok := r.mb.(FolderMailbox)
+func (r *Mailbox) Folders() ([]string, error) {
+	fm, ok := r.mb.(domain.FolderMailbox)
 	if !ok {
 		return []string{"INBOX"}, nil
 	}
@@ -118,8 +124,8 @@ func (r *ResilientMailbox) Folders() ([]string, error) {
 }
 
 // InFolder returns a resilience-wrapped folder-scoped instance.
-func (r *ResilientMailbox) InFolder(name string) (Mailbox, error) {
-	fm, ok := r.mb.(FolderMailbox)
+func (r *Mailbox) InFolder(name string) (domain.Mailbox, error) {
+	fm, ok := r.mb.(domain.FolderMailbox)
 	if !ok {
 		if name == "INBOX" {
 			return r, nil
@@ -130,12 +136,12 @@ func (r *ResilientMailbox) InFolder(name string) (Mailbox, error) {
 	if err != nil {
 		return nil, err
 	}
-	return Resilient(inner, ResilienceConfig{}), nil
+	return Wrap(inner, Config{}), nil
 }
 
-// Archive forwards to the wrapped backend's Curator through the pipeline.
-func (r *ResilientMailbox) Archive(id string) error {
-	cu, ok := r.mb.(Curator)
+// Archive forwards to the wrapped backend's domain.Curator through the pipeline.
+func (r *Mailbox) Archive(id string) error {
+	cu, ok := r.mb.(domain.Curator)
 	if !ok {
 		return errors.New("briefkasten: backend has no curation support")
 	}
@@ -143,9 +149,9 @@ func (r *ResilientMailbox) Archive(id string) error {
 	return err
 }
 
-// Delete forwards to the wrapped backend's Curator through the pipeline.
-func (r *ResilientMailbox) Delete(id string) error {
-	cu, ok := r.mb.(Curator)
+// Delete forwards to the wrapped backend's domain.Curator through the pipeline.
+func (r *Mailbox) Delete(id string) error {
+	cu, ok := r.mb.(domain.Curator)
 	if !ok {
 		return errors.New("briefkasten: backend has no curation support")
 	}
@@ -154,8 +160,32 @@ func (r *ResilientMailbox) Delete(id string) error {
 }
 
 var (
-	_ Mailbox       = (*ResilientMailbox)(nil)
-	_ Searcher      = (*ResilientMailbox)(nil)
-	_ FolderMailbox = (*ResilientMailbox)(nil)
-	_ Curator       = (*ResilientMailbox)(nil)
+	_ domain.Mailbox       = (*Mailbox)(nil)
+	_ domain.Searcher      = (*Mailbox)(nil)
+	_ domain.FolderMailbox = (*Mailbox)(nil)
+	_ domain.Curator       = (*Mailbox)(nil)
 )
+
+// searchFallback mirrors the application-layer search fallback for the
+// resilience pipeline.
+func searchFallback(mb domain.Mailbox, query string) ([]string, error) {
+	if s, ok := mb.(domain.Searcher); ok {
+		return s.Search(query)
+	}
+	ids, err := mb.ListUnread()
+	if err != nil {
+		return nil, err
+	}
+	needle := []byte(strings.ToLower(query))
+	var out []string
+	for _, id := range ids {
+		raw, err := mb.Fetch(id)
+		if err != nil {
+			continue
+		}
+		if bytes.Contains(bytes.ToLower(raw), needle) {
+			out = append(out, id)
+		}
+	}
+	return out, nil
+}

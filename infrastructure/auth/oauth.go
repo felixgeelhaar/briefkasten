@@ -1,4 +1,6 @@
-package briefkasten
+// Package auth holds authentication infrastructure: OAuth2 token
+// sourcing and the XOAUTH2 SASL mechanism for IMAP/SMTP.
+package auth
 
 import (
 	"context"
@@ -38,7 +40,7 @@ type OAuth2Settings struct {
 }
 
 // token returns a current access token, refreshing as needed.
-func (o *OAuth2Settings) token(ctx context.Context) (string, error) {
+func (o *OAuth2Settings) Token(ctx context.Context) (string, error) {
 	if o.AccessToken != "" && o.RefreshToken == "" {
 		return o.AccessToken, nil
 	}
@@ -61,14 +63,14 @@ func (o *OAuth2Settings) token(ctx context.Context) (string, error) {
 }
 
 // saslClient builds the SASL client for the configured mechanism.
-func (o *OAuth2Settings) saslClient(ctx context.Context, username, host string, port int) (sasl.Client, error) {
-	tok, err := o.token(ctx)
+func (o *OAuth2Settings) SASLClient(ctx context.Context, username, host string, port int) (sasl.Client, error) {
+	tok, err := o.Token(ctx)
 	if err != nil {
 		return nil, err
 	}
 	switch o.Mechanism {
 	case "", "xoauth2":
-		return newXOAuth2Client(username, tok), nil
+		return NewXOAuth2Client(username, tok), nil
 	case "oauthbearer":
 		return sasl.NewOAuthBearerClient(&sasl.OAuthBearerOptions{
 			Username: username,
@@ -82,7 +84,7 @@ func (o *OAuth2Settings) saslClient(ctx context.Context, username, host string, 
 }
 
 // splitHostPort splits addr into host and port, with a default port.
-func splitHostPort(addr string, defaultPort int) (string, int) {
+func SplitHostPort(addr string, defaultPort int) (string, int) {
 	host, portStr, err := net.SplitHostPort(addr)
 	if err != nil {
 		return addr, defaultPort
@@ -104,7 +106,7 @@ type xoauth2Client struct {
 	failed   bool
 }
 
-func newXOAuth2Client(username, token string) sasl.Client {
+func NewXOAuth2Client(username, token string) sasl.Client {
 	return &xoauth2Client{username: username, token: token}
 }
 

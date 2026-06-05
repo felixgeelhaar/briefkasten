@@ -1,4 +1,4 @@
-package briefkasten
+package mcpserver
 
 import (
 	"context"
@@ -6,35 +6,27 @@ import (
 	"fmt"
 	"strings"
 
+	mcp "github.com/felixgeelhaar/mcp-go"
 	"github.com/felixgeelhaar/mcp-go/server"
+
+	"github.com/felixgeelhaar/briefkasten/application"
 )
 
-// Instructions is the server guidance shown to AI models connecting to
-// briefkasten.
-const Instructions = `Briefkasten serves a mailbox over MCP. Pull unread mail with
-email.list_unread + email.fetch, then acknowledge each ingested message
-with email.mark_seen — only after processing succeeded, so failures stay
-unread for retry. Read state cheaply through the email://inbox and
-email://outbox resources. Send mail with email.send (asynchronous: poll
-email.send_status). Curate with email.archive / email.delete — both are
-soft moves and require human confirmation: the host is asked via
-elicitation, or you must ask the user and pass confirm=true. Nothing is
-ever expunged.`
+var errNoOutbox = errors.New("briefkasten: outbox not configured")
 
-// RegisterPrompts exposes prompt templates over the mailbox: hosts get
-// ready-made, content-embedded prompts instead of assembling tool calls.
-func RegisterPrompts(srv *server.Server, mb Mailbox) {
+// registerPrompts exposes prompt templates over the mailbox.
+func registerPrompts(srv *mcp.Server, svc *application.Service) {
 	srv.Prompt("summarize_inbox").
 		Description("Summarize all unread messages: senders, subjects, what needs action.").
 		Handler(func(_ context.Context, _ map[string]string) (*server.PromptResult, error) {
-			ids, err := mb.ListUnread()
+			ids, err := svc.ListUnread("", "")
 			if err != nil {
 				return nil, err
 			}
 			var b strings.Builder
 			b.WriteString("Summarize the following unread messages. For each: sender, subject, one-line gist, and whether it needs action.\n")
 			for _, id := range ids {
-				raw, err := mb.Fetch(id)
+				raw, err := svc.Read("", "", id)
 				if err != nil {
 					continue
 				}
@@ -59,7 +51,7 @@ func RegisterPrompts(srv *server.Server, mb Mailbox) {
 			if id == "" {
 				return nil, errors.New("draft_reply: 'id' argument required")
 			}
-			raw, err := mb.Fetch(id)
+			raw, err := svc.Read("", "", id)
 			if err != nil {
 				return nil, err
 			}
@@ -76,7 +68,7 @@ func RegisterPrompts(srv *server.Server, mb Mailbox) {
 
 	srv.PromptCompletion("draft_reply").
 		Handler(func(_ context.Context, _ server.CompletionRef, arg server.CompletionArgument) (*server.CompletionResult, error) {
-			ids, err := mb.ListUnread()
+			ids, err := svc.ListUnread("", "")
 			if err != nil {
 				return nil, err
 			}

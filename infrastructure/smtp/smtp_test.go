@@ -1,6 +1,8 @@
-package briefkasten
+package smtp
 
 import (
+	"github.com/felixgeelhaar/briefkasten/domain"
+
 	"context"
 	"io"
 	"net"
@@ -73,7 +75,7 @@ func TestSMTPSenderDelivers(t *testing.T) {
 	backend := &memSMTP{}
 	addr := startSMTPServer(t, backend)
 
-	sender, err := NewSMTPSender(SMTPConfig{
+	sender, err := NewSender(Config{
 		Addr:     addr,
 		From:     "nexa@local.example",
 		Insecure: true,
@@ -82,7 +84,7 @@ func TestSMTPSenderDelivers(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = sender.Send(context.Background(), OutboundMessage{
+	err = sender.Send(context.Background(), domain.OutboundMessage{
 		ID:      "m-7",
 		To:      []string{"steuerberater@kanzlei.example"},
 		Subject: "Belege 2025",
@@ -111,13 +113,13 @@ func TestSMTPSenderRetriesTransientFailure(t *testing.T) {
 	backend := &memSMTP{failNext: true}
 	addr := startSMTPServer(t, backend)
 
-	sender, err := NewSMTPSender(SMTPConfig{Addr: addr, From: "nexa@local.example", Insecure: true})
+	sender, err := NewSender(Config{Addr: addr, From: "nexa@local.example", Insecure: true})
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// First MAIL FROM fails transiently; fortify retry should recover.
-	err = sender.Send(context.Background(), OutboundMessage{
+	err = sender.Send(context.Background(), domain.OutboundMessage{
 		ID: "m-8", To: []string{"a@b.c"}, Subject: "x", Body: "y",
 	})
 	if err != nil {
@@ -131,20 +133,20 @@ func TestSMTPSenderRetriesTransientFailure(t *testing.T) {
 }
 
 func TestSMTPSenderConfigValidation(t *testing.T) {
-	if _, err := NewSMTPSender(SMTPConfig{From: "x@y.z"}); err == nil {
+	if _, err := NewSender(Config{From: "x@y.z"}); err == nil {
 		t.Error("missing addr accepted")
 	}
-	if _, err := NewSMTPSender(SMTPConfig{Addr: "h:25"}); err == nil {
+	if _, err := NewSender(Config{Addr: "h:25"}); err == nil {
 		t.Error("missing from accepted")
 	}
 }
 
 func TestSMTPSenderUnreachableServerFails(t *testing.T) {
-	sender, err := NewSMTPSender(SMTPConfig{Addr: "127.0.0.1:1", From: "x@y.z", Insecure: true})
+	sender, err := NewSender(Config{Addr: "127.0.0.1:1", From: "x@y.z", Insecure: true})
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := sender.Send(context.Background(), OutboundMessage{
+	if err := sender.Send(context.Background(), domain.OutboundMessage{
 		ID: "m-9", To: []string{"a@b.c"}, Subject: "x", Body: "y",
 	}); err == nil {
 		t.Error("unreachable server: want error")

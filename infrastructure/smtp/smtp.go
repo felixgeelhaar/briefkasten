@@ -1,6 +1,10 @@
-package briefkasten
+// Package smtp is the SMTP outbound transport (go-smtp), fortify-wrapped.
+package smtp
 
 import (
+	"github.com/felixgeelhaar/briefkasten/domain"
+	"github.com/felixgeelhaar/briefkasten/infrastructure/auth"
+
 	"bytes"
 	"context"
 	"crypto/tls"
@@ -14,8 +18,8 @@ import (
 	"github.com/felixgeelhaar/fortify/timeout"
 )
 
-// SMTPConfig configures an SMTPSender.
-type SMTPConfig struct {
+// Config configures an Sender.
+type Config struct {
 	// Addr is the SMTP server address (host:port). Required.
 	Addr string
 	// From is the envelope and header sender. Required.
@@ -32,28 +36,28 @@ type SMTPConfig struct {
 	TLSConfig *tls.Config
 	// OAuth2 switches authentication from SASL PLAIN to
 	// XOAUTH2/OAUTHBEARER.
-	OAuth2 *OAuth2Settings
+	OAuth2 *auth.OAuth2Settings
 }
 
-// SMTPSender delivers outbound messages over SMTP (go-smtp), wrapped in
+// Sender delivers outbound messages over SMTP (go-smtp), wrapped in
 // fortify resilience: per-attempt timeout and exponential-backoff retry —
 // transient SMTP failures (451) recover without reaching the outbox's
 // failed state.
-type SMTPSender struct {
-	cfg SMTPConfig
+type Sender struct {
+	cfg Config
 	rt  retry.Retry[any]
 	to  timeout.Timeout[any]
 }
 
-// NewSMTPSender validates the config and builds the sender.
-func NewSMTPSender(cfg SMTPConfig) (*SMTPSender, error) {
+// NewSender validates the config and builds the sender.
+func NewSender(cfg Config) (*Sender, error) {
 	if cfg.Addr == "" {
 		return nil, errors.New("smtp: Addr is required")
 	}
 	if cfg.From == "" {
 		return nil, errors.New("smtp: From is required")
 	}
-	return &SMTPSender{
+	return &Sender{
 		cfg: cfg,
 		rt: retry.New[any](retry.Config{
 			MaxAttempts:  3,
@@ -65,7 +69,7 @@ func NewSMTPSender(cfg SMTPConfig) (*SMTPSender, error) {
 }
 
 // Send delivers the message, retrying transient failures.
-func (s *SMTPSender) Send(ctx context.Context, msg OutboundMessage) error {
+func (s *Sender) Send(ctx context.Context, msg domain.OutboundMessage) error {
 	_, err := s.rt.Execute(ctx, func(ctx context.Context) (any, error) {
 		return s.to.Execute(ctx, 30*time.Second, func(context.Context) (any, error) {
 			return nil, s.deliver(msg)
@@ -74,7 +78,7 @@ func (s *SMTPSender) Send(ctx context.Context, msg OutboundMessage) error {
 	return err
 }
 
-func (s *SMTPSender) deliver(msg OutboundMessage) error {
+func (s *Sender) deliver(msg domain.OutboundMessage) error {
 	c, err := s.dial()
 	if err != nil {
 		return fmt.Errorf("smtp dial %s: %w", s.cfg.Addr, err)
@@ -82,8 +86,8 @@ func (s *SMTPSender) deliver(msg OutboundMessage) error {
 	defer c.Close()
 
 	if s.cfg.OAuth2 != nil {
-		host, port := splitHostPort(s.cfg.Addr, 587)
-		auth, err := s.cfg.OAuth2.saslClient(context.Background(), s.cfg.Username, host, port)
+		host, port := auth.SplitHostPort(s.cfg.Addr, 587)
+		auth, err := s.cfg.OAuth2.SASLClient(context.Background(), s.cfg.Username, host, port)
 		if err != nil {
 			return err
 		}
@@ -97,14 +101,14 @@ func (s *SMTPSender) deliver(msg OutboundMessage) error {
 		}
 	}
 
-	raw := buildRFC5322(s.cfg.From, msg, time.Now())
+	raw := domain.RenderRFC5322(s.cfg.From, msg, time.Now())
 	if err := c.SendMail(s.cfg.From, msg.To, bytes.NewReader(raw)); err != nil {
 		return fmt.Errorf("smtp send: %w", err)
 	}
 	return c.Quit()
 }
 
-func (s *SMTPSender) dial() (*smtp.Client, error) {
+func (s *Sender) dial() (*smtp.Client, error) {
 	switch {
 	case s.cfg.Insecure:
 		return smtp.Dial(s.cfg.Addr)
@@ -115,4 +119,4 @@ func (s *SMTPSender) dial() (*smtp.Client, error) {
 	}
 }
 
-var _ Sender = (*SMTPSender)(nil)
+var _ domain.Sender = (*Sender)(nil)

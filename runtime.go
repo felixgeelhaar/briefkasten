@@ -2,92 +2,9 @@ package briefkasten
 
 import (
 	"context"
-	"errors"
 	"sync"
 
 	mcp "github.com/felixgeelhaar/mcp-go"
-)
-
-// Switchable is a Mailbox whose backend can be swapped at runtime. All
-// calls go to the current backend under a read lock; Swap replaces it
-// atomically.
-type Switchable struct {
-	mu sync.RWMutex
-	mb Mailbox
-}
-
-// NewSwitchable wraps an initial backend.
-func NewSwitchable(mb Mailbox) *Switchable {
-	return &Switchable{mb: mb}
-}
-
-// Swap replaces the backend for all subsequent calls.
-func (s *Switchable) Swap(mb Mailbox) {
-	s.mu.Lock()
-	s.mb = mb
-	s.mu.Unlock()
-}
-
-func (s *Switchable) current() Mailbox {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	return s.mb
-}
-
-func (s *Switchable) ListUnread() ([]string, error) { return s.current().ListUnread() }
-func (s *Switchable) Fetch(id string) ([]byte, error) {
-	return s.current().Fetch(id)
-}
-func (s *Switchable) MarkSeen(id string) error { return s.current().MarkSeen(id) }
-
-// Search forwards to the backend's Searcher; backends without one get
-// the same fallback the tool layer uses.
-func (s *Switchable) Search(query string) ([]string, error) {
-	return searchMailbox(s.current(), query)
-}
-
-// Folders forwards to the backend when it supports folders.
-func (s *Switchable) Folders() ([]string, error) {
-	if fm, ok := s.current().(FolderMailbox); ok {
-		return fm.Folders()
-	}
-	return []string{"INBOX"}, nil
-}
-
-// InFolder forwards to the backend when it supports folders.
-func (s *Switchable) InFolder(name string) (Mailbox, error) {
-	if fm, ok := s.current().(FolderMailbox); ok {
-		return fm.InFolder(name)
-	}
-	if name == "INBOX" {
-		return s, nil
-	}
-	return nil, errors.New("briefkasten: backend has no folder support")
-}
-
-// Archive forwards to the backend's Curator.
-func (s *Switchable) Archive(id string) error {
-	cu, ok := s.current().(Curator)
-	if !ok {
-		return errors.New("briefkasten: backend has no curation support")
-	}
-	return cu.Archive(id)
-}
-
-// Delete forwards to the backend's Curator.
-func (s *Switchable) Delete(id string) error {
-	cu, ok := s.current().(Curator)
-	if !ok {
-		return errors.New("briefkasten: backend has no curation support")
-	}
-	return cu.Delete(id)
-}
-
-var (
-	_ Mailbox       = (*Switchable)(nil)
-	_ Searcher      = (*Switchable)(nil)
-	_ FolderMailbox = (*Switchable)(nil)
-	_ Curator       = (*Switchable)(nil)
 )
 
 // NewConfigServer builds the configured backend and serves it behind a
@@ -104,21 +21,20 @@ func NewConfigServer(cfg *Config) (*mcp.Server, *Outbox, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	sw := NewSwitchable(mb)
-	srv := NewServer(sw, WithAccounts(accounts))
-	if cfg.RuntimeConfig {
-		registerConfigTools(srv, cfg, sw)
-	}
 	ob, _, err := cfg.BuildOutbox()
 	if err != nil {
 		return nil, nil, err
 	}
+
+	sw := NewSwitchable(mb)
+	opts := []ServerOption{WithAccounts(accounts)}
 	if ob != nil {
-		registerSendTools(srv, ob)
+		opts = append(opts, WithOutbox(ob))
 	}
-	RegisterResources(srv, sw, ob, WithAccounts(accounts))
-	RegisterPrompts(srv, sw)
-	RegisterUI(srv)
+	srv := NewServer(sw, opts...)
+	if cfg.RuntimeConfig {
+		registerConfigTools(srv, cfg, sw)
+	}
 	return srv, ob, nil
 }
 
