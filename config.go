@@ -105,18 +105,22 @@ func overlay(dst *string, key string) {
 	}
 }
 
+// ResolvedBackend returns the effective backend name: the explicit Backend
+// value, or "imap" when IMAP.Addr is set, "maildir" otherwise.
+func (c *Config) ResolvedBackend() string {
+	if c.Backend != "" {
+		return c.Backend
+	}
+	if c.IMAP.Addr != "" {
+		return "imap"
+	}
+	return "maildir"
+}
+
 // BuildMailbox constructs the configured backend and a short description
 // for logging.
 func (c *Config) BuildMailbox() (Mailbox, string, error) {
-	backend := c.Backend
-	if backend == "" {
-		if c.IMAP.Addr != "" {
-			backend = "imap"
-		} else {
-			backend = "maildir"
-		}
-	}
-	switch backend {
+	switch backend := c.ResolvedBackend(); backend {
 	case "maildir":
 		mb, err := NewDirMailbox(c.Maildir)
 		if err != nil {
@@ -134,7 +138,8 @@ func (c *Config) BuildMailbox() (Mailbox, string, error) {
 		if err != nil {
 			return nil, "", err
 		}
-		return mb, "imap " + c.IMAP.Addr, nil
+		// Remote backend: guard with timeout, retry, circuit breaker.
+		return Resilient(mb, ResilienceConfig{}), "imap " + c.IMAP.Addr, nil
 	default:
 		return nil, "", fmt.Errorf("config: unknown backend %q (want maildir or imap)", backend)
 	}

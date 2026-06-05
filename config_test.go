@@ -148,8 +148,8 @@ func TestBuildMailboxIMAP(t *testing.T) {
 	if err != nil {
 		t.Fatalf("BuildMailbox: %v", err)
 	}
-	if _, ok := mb.(*briefkasten.IMAPMailbox); !ok {
-		t.Errorf("backend = %T, want *IMAPMailbox", mb)
+	if _, ok := mb.(*briefkasten.ResilientMailbox); !ok {
+		t.Errorf("backend = %T, want resilience-wrapped IMAP", mb)
 	}
 }
 

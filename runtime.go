@@ -75,16 +75,8 @@ func registerConfigTools(srv *mcp.Server, cfg *Config, sw *Switchable) {
 		Handler(func(_ context.Context, _ struct{}) (map[string]any, error) {
 			mu.Lock()
 			defer mu.Unlock()
-			backend := cfg.Backend
-			if backend == "" {
-				if cfg.IMAP.Addr != "" {
-					backend = "imap"
-				} else {
-					backend = "maildir"
-				}
-			}
 			out := map[string]any{
-				"backend": backend,
+				"backend": cfg.ResolvedBackend(),
 				"maildir": cfg.Maildir,
 				"imap": map[string]any{
 					"addr":     cfg.IMAP.Addr,
