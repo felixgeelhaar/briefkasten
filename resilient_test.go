@@ -3,6 +3,8 @@ package briefkasten
 import (
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 	"sync"
 	"testing"
 	"time"
@@ -116,5 +118,30 @@ func TestBuildMailboxWrapsIMAPInResilience(t *testing.T) {
 	}
 	if _, ok := mb.(*ResilientMailbox); !ok {
 		t.Errorf("imap backend = %T, want *ResilientMailbox", mb)
+	}
+}
+
+func TestResilientForwardsCapabilities(t *testing.T) {
+	mb, root := newDir(t)
+	if err := os.MkdirAll(filepath.Join(root, "steuern", "new"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	drop(t, root, "a.eml", "From: x@y.z\r\nSubject: Spende\r\n\r\nDanke")
+	r := Resilient(mb, ResilienceConfig{InitialDelay: time.Millisecond})
+
+	folders, err := r.Folders()
+	if err != nil || len(folders) < 2 {
+		t.Errorf("folders = %v err = %v", folders, err)
+	}
+	ids, err := r.Search("Spende")
+	if err != nil || len(ids) != 1 {
+		t.Errorf("search = %v err = %v", ids, err)
+	}
+	scoped, err := r.InFolder("steuern")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := scoped.(*ResilientMailbox); !ok {
+		t.Errorf("scoped = %T, want resilience-wrapped", scoped)
 	}
 }

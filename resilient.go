@@ -94,4 +94,47 @@ func (r *ResilientMailbox) MarkSeen(id string) error {
 	return err
 }
 
-var _ Mailbox = (*ResilientMailbox)(nil)
+// Search forwards to the wrapped backend's Searcher (or the generic
+// fallback), guarded by the same resilience pipeline.
+func (r *ResilientMailbox) Search(query string) ([]string, error) {
+	v, err := r.execute(func() (any, error) { return searchMailbox(r.mb, query) })
+	if err != nil {
+		return nil, err
+	}
+	return v.([]string), nil
+}
+
+// Folders forwards to the wrapped backend when it supports folders.
+func (r *ResilientMailbox) Folders() ([]string, error) {
+	fm, ok := r.mb.(FolderMailbox)
+	if !ok {
+		return []string{"INBOX"}, nil
+	}
+	v, err := r.execute(func() (any, error) { return fm.Folders() })
+	if err != nil {
+		return nil, err
+	}
+	return v.([]string), nil
+}
+
+// InFolder returns a resilience-wrapped folder-scoped instance.
+func (r *ResilientMailbox) InFolder(name string) (Mailbox, error) {
+	fm, ok := r.mb.(FolderMailbox)
+	if !ok {
+		if name == "INBOX" {
+			return r, nil
+		}
+		return nil, errors.New("briefkasten: backend has no folder support")
+	}
+	inner, err := fm.InFolder(name)
+	if err != nil {
+		return nil, err
+	}
+	return Resilient(inner, ResilienceConfig{}), nil
+}
+
+var (
+	_ Mailbox       = (*ResilientMailbox)(nil)
+	_ Searcher      = (*ResilientMailbox)(nil)
+	_ FolderMailbox = (*ResilientMailbox)(nil)
+)
