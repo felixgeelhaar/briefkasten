@@ -23,6 +23,40 @@ go install github.com/felixgeelhaar/briefkasten/cmd/briefkasten@latest
 BRIEFKASTEN_ADDR=:8090 BRIEFKASTEN_MAILDIR=./maildir briefkasten
 ```
 
+## Configure
+
+Three layers, 12-factor precedence — **env > config file > defaults**:
+
+```yaml
+# briefkasten.yaml (or point BRIEFKASTEN_CONFIG elsewhere)
+addr: ":8090"
+backend: imap            # or maildir; inferred from imap.addr when omitted
+maildir: ./maildir
+imap:
+  addr: imap.example.org:993
+  username: alice
+  password: "..."
+  mailbox: INBOX
+runtime_config: false    # enable config.get / config.set MCP tools
+```
+
+Every key has an env override: `BRIEFKASTEN_ADDR`, `BRIEFKASTEN_BACKEND`,
+`BRIEFKASTEN_MAILDIR`, `BRIEFKASTEN_IMAP_ADDR` / `_USER` / `_PASSWORD` /
+`_MAILBOX` / `_INSECURE`, `BRIEFKASTEN_RUNTIME_CONFIG`.
+
+### Runtime reconfiguration over MCP
+
+With `runtime_config: true` two extra tools are served:
+
+| Tool | Does |
+|---|---|
+| `config.get` | Active configuration — credentials redacted |
+| `config.set` | Partial patch: validates the new backend, hot-swaps it, persists to the config file |
+
+A failed `config.set` leaves the old backend serving. Off by default —
+`config.set` accepts mailbox credentials, so enable it only on trusted
+networks.
+
 The default backend is a maildir-style directory: drop `.eml` files into
 `<maildir>/new` — that's "receiving mail". Consumers fetch and mark seen;
 seen messages move to `<maildir>/cur`. Ideal for development, testing, and
@@ -45,6 +79,11 @@ Ids are message UIDs. `email.list_unread` is `UID SEARCH UNSEEN`,
 connection — no state to lose across server restarts or idle timeouts.
 Optional: `BRIEFKASTEN_IMAP_MAILBOX` (default `INBOX`),
 `BRIEFKASTEN_IMAP_INSECURE=1` for plaintext IMAP (local/testing only).
+
+Remote backends are wrapped in [fortify](https://github.com/felixgeelhaar/fortify)
+resilience automatically: per-call timeout, exponential-backoff retry,
+and a circuit breaker that fast-fails while the server is down. Bad
+message ids are never retried and never trip the breaker.
 
 ## Consume
 
