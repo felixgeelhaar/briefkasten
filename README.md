@@ -85,6 +85,26 @@ resilience automatically: per-call timeout, exponential-backoff retry,
 and a circuit breaker that fast-fails while the server is down. Bad
 message ids are never retried and never trip the breaker.
 
+#### Gmail
+
+Gmail speaks IMAP — no extra backend needed:
+
+1. Enable 2-step verification on the Google account.
+2. Create an [app password](https://myaccount.google.com/apppasswords)
+   (regular passwords don't work over IMAP).
+3. Point briefkasten at it:
+
+```yaml
+imap:
+  addr: imap.gmail.com:993
+  username: you@gmail.com
+  password: "<app password>"
+```
+
+Briefkasten only sets the `\Seen` flag — Gmail's "mark as read". Nothing
+is archived or deleted; use a Gmail filter + label and set
+`imap.mailbox` to that label to scope what the connector sees.
+
 ## Consume
 
 Any MCP client works. With mcp-go:
