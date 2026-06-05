@@ -2,3 +2,4 @@
 /maildir/
 .coverctl-history.json
 /dist/
+/findings.json

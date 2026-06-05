@@ -17,7 +17,7 @@ jobs:
         with:
           go-version-file: go.mod
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v8
+        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
         with:
           version: latest
 
@@ -43,10 +43,12 @@ jobs:
         with:
           go-version-file: go.mod
       - name: nox scan (fail on unwaived)
+        # Flags must precede the path: nox uses Go flag parsing, which stops
+        # at the first positional argument and silently ignores later flags.
         run: |
           go install github.com/nox-hq/nox/cli@latest
           mv "$(go env GOPATH)/bin/cli" "$(go env GOPATH)/bin/nox"
-          nox scan . --vex vex.json -fail-on-unwaived
+          nox scan --vex vex.json -fail-on-unwaived .
 
   build:
     runs-on: ubuntu-latest
@@ -58,6 +60,6 @@ jobs:
       - name: Build
         run: go build ./...
       - name: goreleaser config check
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6
         with:
           args: check
