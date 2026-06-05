@@ -174,3 +174,25 @@ func TestBuildMailboxUnknownBackend(t *testing.T) {
 		t.Error("want error for unknown backend")
 	}
 }
+
+func TestConfigOAuth2Parsing(t *testing.T) {
+	path := writeConfig(t, `
+imap:
+  addr: imap.gmail.com:993
+  username: alice@gmail.com
+  oauth2:
+    client_id: cid
+    client_secret: csec
+    refresh_token: rtok
+    token_url: https://oauth2.googleapis.com/token
+    mechanism: xoauth2
+`)
+	cfg, err := briefkasten.LoadConfig(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	o := cfg.IMAP.OAuth2
+	if o == nil || o.ClientID != "cid" || o.RefreshToken != "rtok" || o.Mechanism != "xoauth2" {
+		t.Errorf("oauth2 = %+v", o)
+	}
+}

@@ -1,6 +1,7 @@
 package briefkasten
 
 import (
+	"context"
 	"crypto/tls"
 	"errors"
 	"fmt"
@@ -23,6 +24,8 @@ type IMAPConfig struct {
 	Insecure bool
 	// TLSConfig optionally overrides the TLS client configuration.
 	TLSConfig *tls.Config
+	// OAuth2 switches authentication from LOGIN to XOAUTH2/OAUTHBEARER.
+	OAuth2 *OAuth2Settings
 }
 
 // IMAPMailbox is a Mailbox backed by an IMAP server (go-imap v2).
@@ -63,7 +66,18 @@ func (m *IMAPMailbox) dial() (*imapclient.Client, error) {
 	if err != nil {
 		return nil, fmt.Errorf("imap: dial %s: %w", m.cfg.Addr, err)
 	}
-	if err := c.Login(m.cfg.Username, m.cfg.Password).Wait(); err != nil {
+	if m.cfg.OAuth2 != nil {
+		host, port := splitHostPort(m.cfg.Addr, 993)
+		auth, err := m.cfg.OAuth2.saslClient(context.Background(), m.cfg.Username, host, port)
+		if err != nil {
+			_ = c.Close()
+			return nil, err
+		}
+		if err := c.Authenticate(auth); err != nil {
+			_ = c.Close()
+			return nil, fmt.Errorf("imap: authenticate: %w", err)
+		}
+	} else if err := c.Login(m.cfg.Username, m.cfg.Password).Wait(); err != nil {
 		_ = c.Close()
 		return nil, fmt.Errorf("imap: login: %w", err)
 	}

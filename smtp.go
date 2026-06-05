@@ -30,6 +30,9 @@ type SMTPConfig struct {
 	Insecure bool
 	// TLSConfig optionally overrides the TLS client configuration.
 	TLSConfig *tls.Config
+	// OAuth2 switches authentication from SASL PLAIN to
+	// XOAUTH2/OAUTHBEARER.
+	OAuth2 *OAuth2Settings
 }
 
 // SMTPSender delivers outbound messages over SMTP (go-smtp), wrapped in
@@ -78,7 +81,16 @@ func (s *SMTPSender) deliver(msg OutboundMessage) error {
 	}
 	defer c.Close()
 
-	if s.cfg.Username != "" {
+	if s.cfg.OAuth2 != nil {
+		host, port := splitHostPort(s.cfg.Addr, 587)
+		auth, err := s.cfg.OAuth2.saslClient(context.Background(), s.cfg.Username, host, port)
+		if err != nil {
+			return err
+		}
+		if err := c.Auth(auth); err != nil {
+			return fmt.Errorf("smtp auth: %w", err)
+		}
+	} else if s.cfg.Username != "" {
 		auth := sasl.NewPlainClient("", s.cfg.Username, s.cfg.Password)
 		if err := c.Auth(auth); err != nil {
 			return fmt.Errorf("smtp auth: %w", err)

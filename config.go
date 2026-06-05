@@ -35,11 +35,12 @@ type Config struct {
 
 // IMAPSettings is the serializable subset of IMAPConfig.
 type IMAPSettings struct {
-	Addr     string `yaml:"addr"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	Mailbox  string `yaml:"mailbox"`
-	Insecure bool   `yaml:"insecure"`
+	Addr     string          `yaml:"addr"`
+	Username string          `yaml:"username"`
+	Password string          `yaml:"password"`
+	Mailbox  string          `yaml:"mailbox"`
+	Insecure bool            `yaml:"insecure"`
+	OAuth2   *OAuth2Settings `yaml:"oauth2"`
 }
 
 // OutboxSettings configures outbound mail.
@@ -57,11 +58,12 @@ type OutboxSettings struct {
 
 // SMTPSettings is the serializable subset of SMTPConfig.
 type SMTPSettings struct {
-	Addr        string `yaml:"addr"`
-	Username    string `yaml:"username"`
-	Password    string `yaml:"password"`
-	ImplicitTLS bool   `yaml:"implicit_tls"`
-	Insecure    bool   `yaml:"insecure"`
+	Addr        string          `yaml:"addr"`
+	Username    string          `yaml:"username"`
+	Password    string          `yaml:"password"`
+	ImplicitTLS bool            `yaml:"implicit_tls"`
+	Insecure    bool            `yaml:"insecure"`
+	OAuth2      *OAuth2Settings `yaml:"oauth2"`
 }
 
 // LoadConfig returns the default configuration overlaid with the YAML file
@@ -168,6 +170,7 @@ func (c *Config) BuildMailbox() (Mailbox, string, error) {
 			Password: c.IMAP.Password,
 			Mailbox:  c.IMAP.Mailbox,
 			Insecure: c.IMAP.Insecure,
+			OAuth2:   c.IMAP.OAuth2,
 		})
 		if err != nil {
 			return nil, "", err
@@ -199,6 +202,7 @@ func (c *Config) BuildOutbox() (*Outbox, string, error) {
 			Password:    c.Outbox.SMTP.Password,
 			ImplicitTLS: c.Outbox.SMTP.ImplicitTLS,
 			Insecure:    c.Outbox.SMTP.Insecure,
+			OAuth2:      c.Outbox.SMTP.OAuth2,
 		})
 		desc = "smtp " + c.Outbox.SMTP.Addr
 	} else {
