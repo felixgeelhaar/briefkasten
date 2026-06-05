@@ -252,6 +252,26 @@ acknowledge. The tool contract stays identical for every consumer.
 - **Raw bytes, not parsed mail.** Parsing/MIME policy belongs to the
   consumer; the wire format is base64 RFC 5322.
 
+## Architecture
+
+Hexagonal, dependencies point inward only:
+
+```
+domain/          ports + invariants: Mailbox (+ Searcher, FolderMailbox,
+                 Curator capabilities), Sender, OutboundMessage, the
+                 outbox statechart, OutboxStore
+application/     the use cases — Service (routing, list/read/seen/search/
+                 folders/archive/delete) and the Outbox engine. The MCP
+                 tools and the CLI call the SAME methods.
+infrastructure/  maildir, imap, smtp, auth (OAuth2/XOAUTH2), resilience,
+                 and mcpserver (the MCP presentation adapter)
+briefkasten      root: compatibility facade + Config (composition)
+cmd/briefkasten  composition root; CLI = thin presentation
+```
+
+Human-in-the-loop confirmation lives at the interface layer (MCP
+elicitation, CLI prompt); the shared use case executes after approval.
+
 ## License
 
 MIT
