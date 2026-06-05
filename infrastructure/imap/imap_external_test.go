@@ -3,9 +3,10 @@ package imap_test
 import (
 	"bytes"
 	"errors"
-	"github.com/felixgeelhaar/briefkasten/domain"
 	"net"
 	"testing"
+
+	"github.com/felixgeelhaar/briefkasten/domain"
 
 	"github.com/emersion/go-imap/v2"
 	"github.com/emersion/go-imap/v2/imapserver"

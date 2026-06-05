@@ -22,6 +22,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -33,7 +34,18 @@ import (
 	"github.com/felixgeelhaar/briefkasten"
 )
 
+// Build metadata, injected by goreleaser.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "version" {
+		fmt.Printf("briefkasten %s (commit: %s, built: %s)\n", version, commit, date)
+		return
+	}
 	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
 }
 

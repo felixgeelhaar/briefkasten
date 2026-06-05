@@ -5,19 +5,58 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - name: Lint
-        run: |
-          go vet ./...
-          test -z "$(gofmt -l .)" || (echo "gofmt needed:"; gofmt -l .; exit 1)
-      - name: Test
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.5.0
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Test (race)
         run: go test -race ./...
+      - name: Coverage policy
+        run: |
+          go install github.com/felixgeelhaar/coverctl@latest
+          coverctl check --ci
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: nox scan (fail on unwaived)
+        run: |
+          go install github.com/felixgeelhaar/nox/cmd/nox@latest
+          nox scan . --vex vex.json -fail-on-unwaived
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
       - name: Build
         run: go build ./...
+      - name: goreleaser config check
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          args: check
