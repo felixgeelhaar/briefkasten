@@ -17,6 +17,16 @@ contract instead of binding to IMAP libraries:
 
 \* Sending registers only when an outbox is configured.
 
+Beyond tools, the full MCP surface:
+
+| Surface | What |
+|---|---|
+| Resources | `email://inbox`, `email://inbox/{id}` (raw RFC 5322), `email://outbox`, `email://outbox/{id}` — read state without spending tool calls; `{id}` completes from live unread ids |
+| Prompts | `summarize_inbox` (embeds every unread message), `draft_reply(id)` (embeds the original) |
+| Annotations | read tools are `readOnlyHint`, `mark_seen` is `idempotentHint`, `config.set` is `destructiveHint` |
+| Instructions | the consumption contract (mark seen only after successful processing) ships as server instructions |
+| **MCP Apps UI** | `ui://briefkasten/inbox` — an interactive inbox (list, read, mark seen, compose) rendered by hosts supporting the MCP Apps extension; linked from `email.list_unread` and `email.send_status` |
+
 Built on [mcp-go](https://github.com/felixgeelhaar/mcp-go).
 
 ## Run
