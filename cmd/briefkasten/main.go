@@ -1,24 +1,23 @@
-// Command briefkasten serves a mailbox as an MCP server.
+// Command briefkasten serves a mailbox as an MCP server — and doubles as
+// a human CLI over the same mailbox.
 //
-// Configuration is resolved in 12-factor precedence — environment
-// variables override the config file, which overrides defaults.
+// Server (default):
 //
-// Config file (BRIEFKASTEN_CONFIG, or ./briefkasten.yaml when present):
+//	briefkasten [serve]
 //
-//	addr: ":8090"
-//	backend: imap            # or maildir; inferred from imap.addr when omitted
-//	maildir: ./maildir
-//	imap:
-//	  addr: imap.example.org:993
-//	  username: alice
-//	  password: "..."
-//	  mailbox: INBOX
-//	  insecure: false
-//	runtime_config: false    # enable config.get / config.set MCP tools
+// Human commands:
 //
-// Environment overrides: BRIEFKASTEN_ADDR, BRIEFKASTEN_BACKEND,
-// BRIEFKASTEN_MAILDIR, BRIEFKASTEN_IMAP_ADDR / _USER / _PASSWORD /
-// _MAILBOX / _INSECURE, BRIEFKASTEN_RUNTIME_CONFIG.
+//	briefkasten list   [--folder F] [--account A] [--json]
+//	briefkasten read   <id>
+//	briefkasten seen   <id>
+//	briefkasten search <query>
+//	briefkasten folders
+//	briefkasten send   --to a@b.c --subject S --body B
+//	briefkasten archive <id>   (prompts; --yes to skip)
+//	briefkasten delete  <id>   (prompts; --yes to skip — soft delete, to trash)
+//
+// Configuration: briefkasten.yaml / BRIEFKASTEN_CONFIG / BRIEFKASTEN_* env;
+// see the README for the full reference.
 package main
 
 import (
@@ -35,18 +34,25 @@ import (
 )
 
 func main() {
+	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
+}
+
+func contextTODO() context.Context { return context.Background() }
+
+// serve runs the MCP server (the pre-CLI default behavior).
+func serve() int {
 	log := bolt.New(bolt.NewJSONHandler(os.Stdout))
 
-	cfg, err := loadConfig()
+	cfg, err := loadConfigPath("")
 	if err != nil {
 		log.Error().Err(err).Msg("config load failed")
-		os.Exit(1)
+		return 1
 	}
 
 	srv, outbox, err := briefkasten.NewConfigServer(cfg)
 	if err != nil {
 		log.Error().Err(err).Msg("mailbox init failed")
-		os.Exit(1)
+		return 1
 	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -81,23 +87,7 @@ func main() {
 		Msg("briefkasten listening")
 	if err := mcp.ServeHTTP(ctx, srv, cfg.Addr); err != nil && ctx.Err() == nil {
 		log.Error().Err(err).Msg("serve failed")
-		os.Exit(1)
+		return 1
 	}
-}
-
-// loadConfig reads BRIEFKASTEN_CONFIG, falls back to ./briefkasten.yaml
-// when it exists, then overlays environment variables.
-func loadConfig() (*briefkasten.Config, error) {
-	path := os.Getenv("BRIEFKASTEN_CONFIG")
-	if path == "" {
-		if _, err := os.Stat("briefkasten.yaml"); err == nil {
-			path = "briefkasten.yaml"
-		}
-	}
-	cfg, err := briefkasten.LoadConfig(path)
-	if err != nil {
-		return nil, err
-	}
-	cfg.ApplyEnv()
-	return cfg, nil
+	return 0
 }
