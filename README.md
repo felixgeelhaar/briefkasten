@@ -15,6 +15,8 @@ contract instead of binding to IMAP libraries:
 | `email.send`* | `{"to": [...], "subject", "body"}` → `{"id", "state": "queued"}` |
 | `email.send_status`* | `{"id"}` → `{"state": "queued\|sending\|sent\|failed", "attempts", "error?"}` |
 | `email.search` | `{"query", "folder?", "account?"}` → `{"ids": [...]}` — unread scope, case-insensitive; IMAP searches server-side |
+| `email.archive` | `{"id", "confirm?"}` → `{"ok": true}` — **human-confirmed** (elicitation or confirm flag); soft: filed to Archive, never destroyed |
+| `email.delete` | `{"id", "confirm?"}` → `{"ok": true}` — **human-confirmed**; soft delete to Trash, never expunged |
 
 `email.list_unread`, `email.fetch`, `email.mark_seen`, and `email.search`
 accept optional `folder` (see `email://folders`) and `account` (see
@@ -39,8 +41,37 @@ Built on [mcp-go](https://github.com/felixgeelhaar/mcp-go).
 ```bash
 go install github.com/felixgeelhaar/briefkasten/cmd/briefkasten@latest
 
-BRIEFKASTEN_ADDR=:8090 BRIEFKASTEN_MAILDIR=./maildir briefkasten
+BRIEFKASTEN_ADDR=:8090 BRIEFKASTEN_MAILDIR=./maildir briefkasten   # serve (default)
 ```
+
+## CLI
+
+The same binary is a human client over the same mailbox:
+
+```bash
+briefkasten list   [--folder F] [--account A] [--json]
+briefkasten read   <id>
+briefkasten seen   <id>
+briefkasten search <query>
+briefkasten folders
+briefkasten send   --to a@b.c --subject S --body B
+briefkasten archive <id>      # prompts y/N; --yes to skip
+briefkasten delete  <id>      # prompts y/N; soft delete — to trash
+```
+
+### Human-in-the-loop curation
+
+Archive and delete are deliberately guarded, everywhere:
+
+- **MCP**: `email.archive` / `email.delete` ask the human through MCP
+  elicitation (the host shows a confirmation; decline aborts). Clients
+  without elicitation must pass `confirm: true` — the tool descriptions
+  instruct agents to ask the user first.
+- **CLI**: interactive `[y/N]` prompt; only an explicit yes proceeds.
+- **Semantics**: both are soft moves. Dir backend files into
+  `.archive`/`.trash` sub-maildirs; IMAP copies into Archive/Trash and
+  marks the original seen — deliberately not `MOVE`, which expunges.
+  Briefkasten never destroys data.
 
 ## Configure
 
