@@ -15,12 +15,18 @@ func NewServer(mb Mailbox) *mcp.Server {
 		mcp.WithInstructions(Instructions))
 
 	srv.Tool("email.list_unread").
-		Description("List ids of unread messages in the mailbox.").
+		Description("List ids of unread messages. Optional: folder (see email://folders).").
 		ReadOnly().
 		UIResource(InboxUIResourceURI).
 		OutputSchema(map[string]any{"ids": []string{"m1.eml"}}).
-		Handler(func(_ context.Context, _ struct{}) (map[string]any, error) {
-			ids, err := mb.ListUnread()
+		Handler(func(_ context.Context, in struct {
+			Folder string `json:"folder,omitempty"`
+		}) (map[string]any, error) {
+			box, err := scoped(mb, in.Folder)
+			if err != nil {
+				return nil, err
+			}
+			ids, err := box.ListUnread()
 			if err != nil {
 				return nil, err
 			}
@@ -35,9 +41,14 @@ func NewServer(mb Mailbox) *mcp.Server {
 		ReadOnly().
 		OutputSchema(map[string]any{"raw": "<base64>"}).
 		Handler(func(_ context.Context, in struct {
-			ID string `json:"id"`
+			ID     string `json:"id"`
+			Folder string `json:"folder,omitempty"`
 		}) (map[string]any, error) {
-			raw, err := mb.Fetch(in.ID)
+			box, err := scoped(mb, in.Folder)
+			if err != nil {
+				return nil, err
+			}
+			raw, err := box.Fetch(in.ID)
 			if err != nil {
 				return nil, err
 			}
@@ -49,9 +60,14 @@ func NewServer(mb Mailbox) *mcp.Server {
 		Idempotent().
 		OutputSchema(map[string]any{"ok": true}).
 		Handler(func(_ context.Context, in struct {
-			ID string `json:"id"`
+			ID     string `json:"id"`
+			Folder string `json:"folder,omitempty"`
 		}) (map[string]any, error) {
-			if err := mb.MarkSeen(in.ID); err != nil {
+			box, err := scoped(mb, in.Folder)
+			if err != nil {
+				return nil, err
+			}
+			if err := box.MarkSeen(in.ID); err != nil {
 				return nil, err
 			}
 			return map[string]any{"ok": true}, nil
@@ -62,9 +78,14 @@ func NewServer(mb Mailbox) *mcp.Server {
 		ReadOnly().
 		OutputSchema(map[string]any{"ids": []string{"m1.eml"}}).
 		Handler(func(_ context.Context, in struct {
-			Query string `json:"query"`
+			Query  string `json:"query"`
+			Folder string `json:"folder,omitempty"`
 		}) (map[string]any, error) {
-			ids, err := searchMailbox(mb, in.Query)
+			box, err := scoped(mb, in.Folder)
+			if err != nil {
+				return nil, err
+			}
+			ids, err := searchMailbox(box, in.Query)
 			if err != nil {
 				return nil, err
 			}

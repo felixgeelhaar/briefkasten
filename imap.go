@@ -159,6 +159,37 @@ func (m *IMAPMailbox) Search(query string) ([]string, error) {
 
 var _ Searcher = (*IMAPMailbox)(nil)
 
+// Folders lists the server's mailboxes (LIST "" "*").
+func (m *IMAPMailbox) Folders() ([]string, error) {
+	c, err := m.dial()
+	if err != nil {
+		return nil, err
+	}
+	defer closeClient(c)
+
+	boxes, err := c.List("", "*", nil).Collect()
+	if err != nil {
+		return nil, fmt.Errorf("imap: list folders: %w", err)
+	}
+	out := make([]string, 0, len(boxes))
+	for _, b := range boxes {
+		out = append(out, b.Mailbox)
+	}
+	return out, nil
+}
+
+// InFolder returns an IMAPMailbox scoped to the named mailbox.
+func (m *IMAPMailbox) InFolder(name string) (Mailbox, error) {
+	if name == "" {
+		return nil, errors.New("imap: folder name required")
+	}
+	cfg := m.cfg
+	cfg.Mailbox = name
+	return &IMAPMailbox{cfg: cfg}, nil
+}
+
+var _ FolderMailbox = (*IMAPMailbox)(nil)
+
 // MarkSeen sets the \Seen flag on the message with the given UID.
 func (m *IMAPMailbox) MarkSeen(id string) error {
 	uid, err := parseUID(id)

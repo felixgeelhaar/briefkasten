@@ -2,6 +2,7 @@ package briefkasten
 
 import (
 	"context"
+	"errors"
 	"sync"
 
 	mcp "github.com/felixgeelhaar/mcp-go"
@@ -39,7 +40,36 @@ func (s *Switchable) Fetch(id string) ([]byte, error) {
 }
 func (s *Switchable) MarkSeen(id string) error { return s.current().MarkSeen(id) }
 
-var _ Mailbox = (*Switchable)(nil)
+// Search forwards to the backend's Searcher; backends without one get
+// the same fallback the tool layer uses.
+func (s *Switchable) Search(query string) ([]string, error) {
+	return searchMailbox(s.current(), query)
+}
+
+// Folders forwards to the backend when it supports folders.
+func (s *Switchable) Folders() ([]string, error) {
+	if fm, ok := s.current().(FolderMailbox); ok {
+		return fm.Folders()
+	}
+	return []string{"INBOX"}, nil
+}
+
+// InFolder forwards to the backend when it supports folders.
+func (s *Switchable) InFolder(name string) (Mailbox, error) {
+	if fm, ok := s.current().(FolderMailbox); ok {
+		return fm.InFolder(name)
+	}
+	if name == "INBOX" {
+		return s, nil
+	}
+	return nil, errors.New("briefkasten: backend has no folder support")
+}
+
+var (
+	_ Mailbox       = (*Switchable)(nil)
+	_ Searcher      = (*Switchable)(nil)
+	_ FolderMailbox = (*Switchable)(nil)
+)
 
 // NewConfigServer builds the configured backend and serves it behind a
 // Switchable. When cfg.RuntimeConfig is enabled, config.get and config.set

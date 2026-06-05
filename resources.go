@@ -62,6 +62,22 @@ func RegisterResources(srv *server.Server, mb Mailbox, ob *Outbox) {
 			return &server.CompletionResult{Values: out, Total: len(out)}, nil
 		})
 
+	srv.Resource("email://folders").
+		Name("Folders").
+		Description("Available mailbox folders.").
+		MimeType("application/json").
+		Handler(func(_ context.Context, uri string, _ map[string]string) (*server.ResourceContent, error) {
+			folders := []string{"INBOX"}
+			if fm, ok := mb.(FolderMailbox); ok {
+				var err error
+				folders, err = fm.Folders()
+				if err != nil {
+					return nil, err
+				}
+			}
+			return jsonResource(uri, map[string]any{"folders": folders})
+		})
+
 	srv.Resource("email://outbox").
 		Name("Outbox").
 		Description("Outbound message ids grouped by lifecycle state (queued, sending, sent, failed).").

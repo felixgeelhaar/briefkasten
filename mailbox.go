@@ -32,5 +32,29 @@ type Searcher interface {
 	Search(query string) ([]string, error)
 }
 
+// FolderMailbox is an optional Mailbox capability: backends with multiple
+// folders list them and hand out folder-scoped instances. The base Mailbox
+// always serves the default folder (INBOX).
+type FolderMailbox interface {
+	// Folders returns the available folder names; the default folder is
+	// included (as "INBOX" for the dir backend).
+	Folders() ([]string, error)
+	// InFolder returns a Mailbox scoped to the named folder.
+	InFolder(name string) (Mailbox, error)
+}
+
+// scoped resolves an optional folder argument: empty keeps the default
+// mailbox, otherwise the backend must support folders.
+func scoped(mb Mailbox, folder string) (Mailbox, error) {
+	if folder == "" {
+		return mb, nil
+	}
+	fm, ok := mb.(FolderMailbox)
+	if !ok {
+		return nil, errors.New("briefkasten: backend has no folder support")
+	}
+	return fm.InFolder(folder)
+}
+
 // ErrBadID rejects message ids that try to escape the mailbox.
 var ErrBadID = errors.New("briefkasten: invalid message id")

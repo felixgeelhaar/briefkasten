@@ -101,3 +101,37 @@ func (d *DirMailbox) Search(query string) ([]string, error) {
 }
 
 var _ Searcher = (*DirMailbox)(nil)
+
+// Folders lists the root maildir ("INBOX") plus every subdirectory that
+// looks like a maildir (contains new/).
+func (d *DirMailbox) Folders() ([]string, error) {
+	folders := []string{"INBOX"}
+	entries, err := os.ReadDir(d.root)
+	if err != nil {
+		return nil, fmt.Errorf("briefkasten: folders: %w", err)
+	}
+	for _, e := range entries {
+		if !e.IsDir() || e.Name() == "new" || e.Name() == "cur" || strings.HasPrefix(e.Name(), ".") {
+			continue
+		}
+		if st, err := os.Stat(filepath.Join(d.root, e.Name(), "new")); err == nil && st.IsDir() {
+			folders = append(folders, e.Name())
+		}
+	}
+	sort.Strings(folders[1:])
+	return folders, nil
+}
+
+// InFolder returns a Mailbox over the named sub-maildir; "INBOX" is the
+// root. Folder names cannot escape the root.
+func (d *DirMailbox) InFolder(name string) (Mailbox, error) {
+	if name == "INBOX" {
+		return d, nil
+	}
+	if name == "" || name != filepath.Base(name) || strings.HasPrefix(name, ".") {
+		return nil, fmt.Errorf("briefkasten: invalid folder %q", name)
+	}
+	return NewDirMailbox(filepath.Join(d.root, name))
+}
+
+var _ FolderMailbox = (*DirMailbox)(nil)
