@@ -1,0 +1,3218 @@
+{
+ "@context": "https://openvex.dev/ns/v0.2.0",
+ "@id": "nox-vex-init",
+ "author": "nox",
+ "statements": [
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "README.md:102"
+   ],
+   "_nox_fingerprint": "df81df79b2ee2449445da3f0875a402d803d446188c7258f503dfb147a6770a8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "README.md:126"
+   ],
+   "_nox_fingerprint": "d27fd0b99dae420232e988662566ed1b370e63c6b9dfdde3ccffe55356b02cbd",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "README.md:148"
+   ],
+   "_nox_fingerprint": "f4ed450cdabfb4d13d4a6eebdc2cf7d2491535422bceb183f2dc906f8539c539",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "README.md:206"
+   ],
+   "_nox_fingerprint": "cc1d52f69c5ef798c490a0ebc39ec00378535212a3ec97204d14ddfb908079fc",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "application/outbox_test.go:35"
+   ],
+   "_nox_fingerprint": "161fefa0ad45b74e0f8ff5f10b28d60f57fc1efb8070535e264cecf65250456b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "application/outbox_test.go:185"
+   ],
+   "_nox_fingerprint": "f68f968c784dd9913007a4b77cecac47870d0ff9557e98cde52dd39d855a7b2d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "application/outbox_test.go:192"
+   ],
+   "_nox_fingerprint": "5ec12becced120ea086518cbda9ad312054231e21880e7315777b3cdf2ef2c5a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "application/outbox_test.go:205"
+   ],
+   "_nox_fingerprint": "768838563b69cd24cf8acf4a3cbc474950ae244ac2c44d1446d75aef221a52a5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "application/outbox_test.go:205"
+   ],
+   "_nox_fingerprint": "c52c5eaae44247ccbd30ad5676d6fefa0aaaf97a76efdaf602f47fd9a0c51889",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "config_test.go:182"
+   ],
+   "_nox_fingerprint": "6b30c97c3fa3d0e58bd47fc8a48a696ea528fe0dd71178687333a42e98fe3512",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "imap_test.go:16"
+   ],
+   "_nox_fingerprint": "f1741058fb3a1190751f73f91f2684e4e85efdb7a4e9ac62321a0142caa96e34",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/auth/oauth_test.go:8"
+   ],
+   "_nox_fingerprint": "53acd365fa6b521b310b37df2378af7586f9154483baababe277e9232e0d8dd7",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/auth/oauth_test.go:16"
+   ],
+   "_nox_fingerprint": "cc98dea487fc9542e0b1b7518d8a1644b9ddb86b01ef959f818ee43967008d95",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/auth/oauth_test.go:42"
+   ],
+   "_nox_fingerprint": "e30ed7991a775182358263ead276d5d2f0c22c50e8fc391d327f5e420fb671fb",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/auth/oauth_test.go:52"
+   ],
+   "_nox_fingerprint": "1f1ef69165dc61ea8ac2a3a72dee891e9695c074ec24ccde0656746bb5cb7bc6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/mcpserver/server_test.go:65"
+   ],
+   "_nox_fingerprint": "42aa4b843d61f6265b9df58934b21bca0f5fbb32790deb578ef2d7cc44bdbf61",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/mcpserver/server_test.go:143"
+   ],
+   "_nox_fingerprint": "e08eb313172653fbc047ab0efe878a89262832040b252b62cb4f1bcd4d9c3db8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/oauth_test.go:48"
+   ],
+   "_nox_fingerprint": "09804d5c2d06154b2fb992d297904147504204b145b2bfa24b549886b224f846",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/oauth_test.go:49"
+   ],
+   "_nox_fingerprint": "03d274fe212a293fbee63dc5afe087d37714fa7309721fdcd1b233e3cde7eb1e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/oauth_test.go:70"
+   ],
+   "_nox_fingerprint": "9cf08a86118ce653f8146024c139a7025c8fc7287151e5b8380bf7069fb711db",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:80"
+   ],
+   "_nox_fingerprint": "f1f3728671ad0099fcce3404ed004282f95797d55fa311976dac62575cefdb88",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:89"
+   ],
+   "_nox_fingerprint": "c332149949ad8ed6016400268da30c4b554ed65a24343392f2a0b7d9f8f92aa7",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:99"
+   ],
+   "_nox_fingerprint": "3df5e1734c37c842da39b0d9a7be53217e76512dcbf0c686633cb38b28fc3a33",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:102"
+   ],
+   "_nox_fingerprint": "3be24569352a29abd2a29d20fd9d9de7c66f00de90c593065979d89d9fab6743",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:116"
+   ],
+   "_nox_fingerprint": "a1a2dfde26314f84845ebb06545dac3195d6adaa30c9806a0b197c2b344c290b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "DATA-005",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/smtp/smtp_test.go:145"
+   ],
+   "_nox_fingerprint": "8f617664c6016e26dbf8a8afd251bd64396b6257f6b52927c6a04c1db49480a6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "SEC-080",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "README.md:207"
+   ],
+   "_nox_fingerprint": "d576090da94a240e6e912de6847f2f6b55bb89242d3232e0d8008828705fd7a1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "SEC-082",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "infrastructure/auth/oauth_test.go:16"
+   ],
+   "_nox_fingerprint": "7853015b1e0f4b35e4dddc18f8c6cfd16e5e37ef3d8925835883b9a0f8cf0b95",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "SEC-163",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "runtime.go:55"
+   ],
+   "_nox_fingerprint": "0fe651eaefc242f39e791914de563fe8ae41afaa9e37cdfd1ab1cac1318df825",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "SEC-629",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:59"
+   ],
+   "_nox_fingerprint": "e250e2dc348ba806627a4ff4980950ceb3a183883a5dd8f4dd041635701fb046",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c6b39c118b0c9b01437dd564106f78ab80d4063d025d2cbc79d12a0b9c69f762",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "35f9e277eb62cb57bf6f32cbd36cc1e2952ed15d5cc62da0668e6632b2022f8e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "60aa3f42e4cba9d6aa73a8fa1a3e7e4339138b7774a4872db724956af9a7e620",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "24eb7d30d62434a5a03fa68146baad59a28249d0b6d0509fa507da1ad11c1e71",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "25487f03a77d88792b41184142d3e98a978ceba959c1366fac075233bf2be69b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e0d27bd6823ed50a0987e09a42689f88b6f581047dad0bf53ce1840b479912b0",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "45c523e7be728f857f491300f76e819dbc78a7c87a7cea6b36cce5fc05726cb8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6d7a03546f782226855907ef88ea72cd403999b4a717b8b9c84a720f365a5851",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ecb0a7ca32a8b6e17c8186ff2b4c9bbe1583c7edb74d3d66c83d380235fbc7a7",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "27de2c784280908f74231279e360464b0d55c04767e2efc5d23dc6431cf01802",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e6ee4177230a544c8a5456383971dfec0ea09eef952856f4294b899bddda98b4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c3e538ba6086c131fa078376c4c6d84ee8ed69ebd7a4a502a35ef37ef322cde7",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a3d21f35fc7b2a27385cf6eed4107e030fcae3257881753ef06c0bfb137c5304",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a66380d3e3e35cc66e570f51d23b96ac3af290af4d47407355abea28937ca031",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "68b1882988d8cc150be95008d80687acf341be64c8d372fa0fe3e7b966e8ba84",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "225563b809b4c31225068017214fae35757ad8e96477e78b06c07eb50e3c531f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ba1f58b610debb99b0723506e7d3e41190bb4798d10b2a4d50d8257b326769f4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1d59500d96b1ef8f095dfb4223f0448f582022fbb4113a1d0bac63840aba3816",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "2496136e5fafd9260fb63bb3ad5502e965c5d66029092ccb84f67595c58692c0",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6580d1099f47ab17077ffeb26b7841e3c946a08e2b2dda5bd7c43ed368faebbb",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "af9d4ed793b05f7ac1d0b2849d25981028e9a2cc15042afded344cab682870ae",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "043e9878f9cb2e375ac78e77a29d76aac64a01ac4d19a57c3b43cbfafffcbe22",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0f697a8a6fd5a31b35e453a6fd34a5c99820a318efa10ab0cebef7b0357dc3ac",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8679ee4ff9c6d2de397232530dce5ec216a0277b975682e97efe15fc63240d01",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "f325c4f9ef628a3ea4da8069c8d36878f1ebdabfb3255b40cb44a8c4c66e728f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5f0a51dbeb72c63b58490e53080075cbb0405c34abf6d5b99257f29faf5294d3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b555bcf6d317d794e1bb4cc5e3af428d80b4e91b9bc271257c91db5cc07e245e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4040c1fd968b9f7d5acb8ecbd95010db7ab8a0d3d5812937af3bd4c8cd3cfb96",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "82d4632198857b35ff6700310f4ca5dfd71477a22ea800153c1e307e06563a12",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c481a10c709feff49b1116dd9d942d0ece3767c570731b116b9310a5f145eb21",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6b6e398a0bee7120a23ce7998bbb9e0e130f7d226efd6fda4cd95f09ad3b389e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "55261d92f314248b73c173a2d16da40f23c0eb25b3cbcd519d270b120b6bb55d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5b719718dd792e3cf3c20aba10c08107f08cb78bbc778bd44efce06ad3a6393b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6e8c89e238404776ee2d5062a3a627a9fa8eb8a734c1e1001999eec4a74fd2c6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a6a99bc0129f364a35d336b179ca8eb91d974ee29a8b4c1593e17ac251382d8a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d847d7d39b106f330729e00ec16104ff96d341e7a25af95fc8a9f8c33ab288db",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "dd5884883b06696128ac83c2c35da4d60e09efff5bb5672d4a065883c0f818d5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e483a1a5d8b49bfe19af427998de32b541c8684017de46815289d305d5facc43",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "22da76261dd682a4ce0b5bdc188053ab3c7321f1ce8d2b51f2c07a380b3845e8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7106b3dd29de148d932f1b1537d9ba574661ad101fd4a7437209a92ec2b41f49",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "18074d11743698328b9263f8d2f3d9bc8f5d6b556ecd573a41ac203453553080",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b8cb2ceb45c263edc594d1ed6285edb8b6450daef94cbdebeb638a7adffb2859",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "62fff0f42caf16d27d685f43bec7a0da5b1be04cb33cf435fd227c4ee79aacc5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ed3f01422412eccaa4997441f6ac846ac2160561fe33befdf12e1d9bc446a7c5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7167bd596a7cd980529bfdae2716efdb8e37b5656738a2989a68c5ddedbedd80",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "03afe00f2555eb9b6b45b92389e02bc6ab22fc4b248cad5bfcfa34f8700f732f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d9083365c55305a61545e5a9cd470833726d794f90e6913781c5f7d315072236",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3ffcd01cbf234f87e0953911194d8613c69d87acca836960e9c7f04274de2095",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1f0db28a7da40298a12fa5c5a4641b016fc0d43c827926c24611dddcb4b972a3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b328b712d9b7198bd2dbd3bc93e58b98c8260e8fb0c4072293de9645c8836bc1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b87a1af19be852a5276d7993f954d90a742b13005cf1579880392719397abaa3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "484df3da32fe96011f2882e364def896314a6211d8195a76ba7f4d2a304da351",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d1abf360fede195e8994d02c24a2377fa26d0884741d8cf6293c9ec738d31ae1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1a93f12038efd5f78c15092d9191f3b9eea5098ea6497edc5d178cff29b1d78c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "16982f833b61af5896a17d10965c8d9b754ef8c3e1423fff48e161ee4082bbe4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4ce60bf861b1d83b2d2e9b514b317d3d5974c1a7207c8b4b0597a3817a989086",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e6e9a2802373590ccc13bc54aedb99538e56a7f1d33ce3e3b543337a06287ade",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a15e6fa1c1d08608c01c1a12d2ea9dbf283612890599b5d0eea7229444c2b745",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3cf589b6c884e3ac5c0afd3364c62e9a3bf3ed3dbb3f8055a7ac4a021c606fa4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "bd0631ad3d054be416485e1374c437009f7c0b21d6ea3ef5f036adbb7b5592fe",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6926a5b932b513c9c1aa0f86f6ae38253173f38aa713859a4dab72111560ea80",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c7d59d9e5d0b156adb7d6a439c7af6058f00f74c628eaba30df678656ce60c75",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c65e4efc3ac351761f6f6e238a6fa9231881f42fa8b99335240dc01e136ef2d3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b7331c910fc7d6f066138ea3f9c19e369095d331524682d70e33b5834cd41976",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "31b40923e8a7c089075f2f3c833a964c6b1361c0bdae803fa2702f29de391ef3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7c622423b2593d09f901129f1086a07c5887e178c38a8988821d5df3cccdfcae",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "357f44669cb80e774e7986a5d672b65c35ca213c13145b88baeb0309a7ba9ed5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6dbcbbf8ceb86f5f8f45514c57b5e2f501e8092b743a8430002b610328584737",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4cdc57b30285f97a51cb7714766221c584f8caaa2d40ee4e5e22f4061303b638",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "76e4de8b049b0b546252a2bba896daf69dffc5559b920d35a29dece9d557e476",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "bfa7374a71bfa1c49191c0cc63333dc5f8c9e046efba9bd68103bf639b6230de",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "f4d0ed6e35d6fb56ecf40f0871c8ecbfa9cd3da48e75db69abf30ee280115ee9",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c0b3721ce94ece66951c83f69beaf3b94136cf8716105edf9b350dfd4c317af8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "2e79852c37900d5b32d8e47376fbe52e423df2f0126d934a4763cb4e86539b2c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "cb71ffe7567412148b0f77c616069eeb3259759bd20cfa416e2a550c92fd7e05",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "22318efd5ce4ed5b1d318826b9d900ea51af3a89bda1a417f2c1e42422b2dbd6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "78c09433f7e24118abc6f15505cd77ec3a9f18b399def877cc03260ed8e0d4bd",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ea92b7a97b549c5c287bdff58859b64a7d2ff6d0ee2815868ee81061a3e5a4e1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "90abd5e9cf4daaa64da1c6e1300295d837caad97629908e81e5144a32060b327",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "26968554a8fd6edbde1da7f004482e9018906c1f3820b9eb67e9cb5277f69e75",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "53ca12fcdaf41217eee55ea8358d1394c8517241ded2868f4c3affcc375ef879",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1c364c5c900b0eb1041c134d9536fcfc7b2c73280029408d5cecc968ab2af234",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "14e7b62d5091f50dad8009abbf4b7842cb9c56a5383f9372539857494b4ebd74",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "10d8c73df790012e92897479b6bbeeb45ee2c5e5cd396e174c5cd9082446a667",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "05ef34bb8e3bf47339775c17c3e60e5b9cd64ad586bd94727355c4646084f021",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "69eb353ddc75fb2e3d7ddf5a9ff6693944f36f6f29a1ff69b17da22328e6642e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0ff059cd1c22620e6498d507d355a78547497d13f808870b81dd12d3f28392d6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "839e1c0f39c013a4e83ba3bd8a9b131953045544b6d09ca11bbf292f0ab2cef8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "cdc345480a64c59734cda1cfe551966d12fdb6f2a8f7471fe993fdf7ce52c77e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b0038cb6a3262044e323744264831ea6741271ba57c674324401d1b807ed256c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4e012c4152158bf21932c346f0bb6fb68e4bb70934cc0fcf75232afb8765aae5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6889caeea0463966e97ff273e068bc855036a30cca73f919045f91f1b26c3a3e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7dc3fc478f3e18b3525319ca3496ad03e03acd9319d336e271a9022fcace3854",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3e5575e17386abaf045dbe6bf931886d6a0f723f709ff71a853fc02e95c31c62",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3c6ec6f57505caa99905fc9203562cb6e9e28f820f141067a4d0d3d251cc3712",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "bdb5522ac971f3d2f47d61d5af7e15669237e02a86123a0e7bc05187673fc9a8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c9071f7552dbb5dadecc1d6dc775ba5b28aa25a268dd0b85e3d8fe54ee56c029",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8537bc31c35eb88c1ed6480fd162e593d65880d92ef7bcac1ee5ba60b9eaa83a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6bd368dd79144600c400c9bbbd8dc43f6da8e9cc8e4765360b5d2e781380aeef",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c88e7e13a6ad3c12891d4d21f2638ef2bea95946e3df252404d14f3bc6f0c80f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "20c69a455322c88887ea4ea09b8494fe17c76799da4265b897ca952df9f592ec",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "18932cafe08636351222d5cffb778c6c16d0e5b02b568d22de743ddf6d20fb25",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "f00805f453df7dc3f27a827888ef24ebb0a863cfa0a4d4519c13a7c0ec3991a5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c5995bc823df0a51f7365e01a20dcc5337aa6e8aef765754cc0c3e96c1271e18",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c7b2b7363a86468944b9e4113d0f9215f3399a65dd4078932ef68ef31f6b7889",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "06216cf8031b238f26b8e9ea2730bd281bca90048b382538f0e0f403094847fb",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "80bda6cb1a21de5e4554626b3ca61b66ed7da28aee010fed5c814eafabb6be39",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4361c3167ba70b3423f182742f76c2e82c7c53b3014b6c83bea00612ceb39f8e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "20ca53d1948f12a1ead4c1837564bc4b7640adbadb72a7b580cc76254dd48105",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "dfdf723041757000f5333fb0cf63759f10ccf54234fa7f427e781ddf40728ee4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "63211ef13a4eeb25089514115200726dc55a6e243df2d3e984eebf05e44f892d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ba9705bfb2ec805dd77aae16d4fba73d6b4d69c1aede92b8cdc3d27b70247bc0",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "350a6b7bdf73b90b265f815496e0e744056a046679d60341c63cd9883a5aa1a3",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "099f294ab6e7470e0d76442b3a517c77b631b00a9d80bd407d6c081c04476536",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "98abe63a4fb817a258060923986479c66f81be3f3adb42d2934b57418e2b1778",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3f4e7a38fe1a0dd45c9ca709c4c037ff48e12fec83c862afb18891f849e61757",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4a5cee569275724905ba115dbd5779811dc3869292b0f935cd8f8aa6eec4e62a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7613a8f8307cc24cd44689cae336ea6c6139b1707287cb75a492ebe8a46a9f2b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "97e4694b8ea4be9aa73f2840f59dfa3f83616979586b42cdc26db63007be412e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8f9c56e0bbc2212df83eb173f04e7c178849502d1709ff8287077a4ae5ce0e2b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "94feacefa6740e41e5fe6b2034ecb8f190d037f3ddf501b8d2a4f96840196feb",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b1640d1e814469cd63791465577c5c754f7ed2ee0684d066eecc198fd9c1b700",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b4e1e57dd944eed309431bf3bcd88582ef29a73710c2556334528c59338dcd4a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4e055b15bbd2db0c234366673eb62dea4aa8989d650b525b75896ab13cb03cb9",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6899e9387c7a3977e1e20928635c29c19b74f9e3fc69b396e778c84a53b371d0",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3e67a4175ed36ff2c144b1088f48863c0a030b62dbb5e254ce24442e5c07ca74",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "58a861b6a84479d75743ab85e68ab6101a5fc40fb91f97ef6ad6c4f297757ea6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ed71405ac19dd17dc3d35ef7ceefc228f40ee6c3358a44011d8201c2d83d471e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3f61693024e8bc87a2b685160f9ef5ead32bb98d30f29e6890d8e378fcf87f35",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d9856ba91387b29d8c525278d35ee8e5700b20f3c95a11ede587282f47d72777",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "32112808d25e62d72fb2ad902792ec7d55488e6835b61a2d70ed9618855e793b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "9a8d8a3d333f130376f4c54085bb3e22cff189b1974e30c92f0e7e5d78769eda",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8bad4f15970d0e1c58096349f848f773fed03eb50c9e7c43b1c49cf9dc998d49",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c26b4a3aa8087905b89d4cdbb91e0ba12077ab720b55e8b088b9586c44749c1d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0f56c2ebd9a83479b27c252c630cabceaeac450c4bbd614c2fa89820e715239b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "42971688a2beea31f57a482e3679a99063e64dadf1251b7f09740ea05737e689",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "fe9c7d4ce8a1bf0c92b73a3c433d75471e513d5baf74b8fb1fa5ec9a61ccf0c0",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b34b5bf7fba659b1e2a5f0a9e45cba9f1003c9614fdf11d334fec3ae1a269c12",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "9e19351cd45588676760e297383b2aa75e2615cb7f3673e36b68ed341d2bd9f5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e2a1cf5806932b5838966f3edda9863d209c5efa13a1b7ebeaa1fa2225d2aa0c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5e726e5c35073ec5c5fee38ada73d1468bb0d227f46f0471ba9d1fe940bd3a2e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "364500cdfddf4fcab5c494e9f0f5cbdcb88dbd7ad4924649c1ad11f64b9ce839",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a1e9d5ddafcf377b609ae9a940312ab767d01dfc725adcb4c6355b092dcdf316",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b7a962a8e81dd0f57f24c00276075ae1b76b2cf7d7bc6baf9e047f090d04c175",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "88a66882a031a6cf1947782b78ab3b4807ad3b961e06b01765653199ad2c9c05",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1d8a7b0fead52a128b92b51aab9f84a292c0d3bd9749375d442d9abd819f18ef",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "503160c4cce80d961a86473cd3a2bdb8d0c70cffd5bb113466265f34434956ed",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "04c605cea8a6be2d56e6b980b36000fbf293d0c524320b6d3a6deb784b272673",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ce524316664d84619c74f8b02a2e6c686a22a6a236cc6536097832a23206cae9",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "16425ce80f77fe89dabfe12257cc935c059203090e6fa326c71532e053a593d9",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "45ef6bfd81dc56acffc008f3c55ce078a2e142288dfa4c2d753502b2cac51bb2",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b95c8ee6817522a7c1aa1004dcc7fe97ab5704d7d02b52751b797acf0ebb0851",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0adca6ff42e1e38c049b383deee959400e1dc2a02c64959bc6ebf85e0971b480",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "613646d070bc25778548157cd235eeea889d728b9dc9358b719ae4d5a4b14f57",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "9e1c07ebb1e132c20554ee055afa1e42357f999fd8053297237adcfdf92f22a2",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "591acde88cfaaa29a9636e0485ce3a5a5336db18ccd50188912b1d495697c691",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6b9b1d79d71eb0bc5b9c6899092c805cfbb20d0bbf5b155ee719e8b403592cdc",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d7fbcd4cf1ce204c427d91d355d565b95ffae57922ce0016e6bd082616e15902",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "58f6f768ea3978146456d5e6bf78adfe9fec9166614c20d775fe76fab99502fe",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7051725c61634511e836d673cce8bb76c75facf59302dedc26f7d65fd752af8f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "9955dd851bae203ea3dab4582ae52234c7327156cfd125d385639020ac535136",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d1d4245f854187419dc68a3401e7bbfce80c8215b187f5a876efc520d1dbf873",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0a49f0f1ed2fec336265372bb20a1c810c3c2fbb7326ed312f2f88da641a02fe",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "94ec126fa5c1317aee33f6a5a3227ea586edd0fea9e2572febd46b814b456984",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "3da1a1a99f832de506ecab8d5847f85ed1b19efa15d6655c66c76d0637b237f1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c274dbc4bba2b3ebf6ef7ec64f2d93da99a5e011dc6ac2bfd85a98fc8346711f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "2accbc1a84ca9f6cbb9c6065ee412a8ea46bfbcd4f99193c3f7a8f7f54339be4",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ebafde2026df89e33ec6bfc749921f5b1e326a3748062a14cb2304df54fd0200",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1f9ae987d3cb07df80313903b326402437fef5e738398faa3f4d84454095c0ed",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "6e5a955ed9b2eebc1af783c165aa1dbcc97cd98d0f24338dcd838360b08aec8f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4f7b099d501bb8f672daa566e45dd2c87c973e535108c528e2d5ced1726aeb5f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "99ca0f93bc86090d703dac985dfee3bc5bdc47802ef8ee84ce100b6ad8033464",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "28fa6ca1c1bb34526132ace9eb19e6dd1bd8f50f923d801d9c553b86f6a44417",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4b2b8d3cbc80946a27119019a2277c0371c3db424c9fda5a104cf51ce8b28da8",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8fcf9791868063ca4b94ff0e588648fa58e010ff7c51cf45fc8a32f93fe9005b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "2b1eaf51253183a8413580921ebcd2a376c4c8ce01640b72db1d66e91488d563",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "82848102fb3d60cf2670b43eb26caac716d33ccd3f62044152af6463e2fd6170",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "cb0e401946ea55ca4514ffd4fd60296f6fb578cd715429b5d25e5ef6f2a4ce28",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "538791edc1a19265133f54018df72b1d0a423c18214e8fac59e1f05868b32059",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "8657d3f2232e287df1898c100d153fcd027e9795815e39063f2894b50459faf9",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "cf551be2e2356179f3acc60a0aa6ad3c89d8aeace3ca72c104fa58d78bfb776b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5fdceea4e2947c6244676c55ab5974bd1fe12af50f78e28738093c872cae563d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "07bba66fd8221d451171d0e860fd2ff36b66cbd50023ae9d24b567d1cc6b80d6",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4f2b39b2d50fef2013357d86ddb8f69b9c432240cdb84874f7ba88b0acae4c69",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "40031da0ecac2f312894af8d4c6b6627a6f9478830438ed317ca44a4bdd26e42",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "1b4ca0159d25aa4f013a042ac1be808af19e51b146baef99b6fc49392d9016bd",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "9820318be108ef28469f3ce8ad35a1ee5cd83aebfc06b078752f04c274dde847",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "74c40550ed459e8ded96311793c80af00aed1ab0bfbb921de033132f16d9cd0a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "94b915581bf7964b7a7899fe2e5a6d878dc14eb0f2a401862580fada387ed323",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "42009f08e7a92d5ff7149ddf5dc5999d4a828cb11a7c034ff29e5dcdedca44ec",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c3d39277f9ed095a67c3803ee112c761819147f69ca19fbea447a284ae7af86e",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "c057cd405ea502d61967535b80e146fc9b16050f914b0412c77b2cdb079f4551",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5b0e5b0c919b1f897a484fbbfd0c21c62dcd18b08fa6812a015c21e5988ce7de",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "57ee3b1af3afd8028c1ea565692b83f034e9cad31f3a2f89cdda9232e5e5d4c1",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "23da41714d16edcd71f5fd064c5c86fd7fb8893774d7524402a4c8b67c3a8bfe",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "132ab38f888c4012e6438eb1b2d1324e951dec43bc7a36dd76cba3046c9ab645",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "59f751820dabc37bfc06ca5a9dfb31563f034f450ea8c84ac857e5aa5ae959be",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "a04a3222f6ea39c89d9d1185338c93ee767273686e818caff89cd00ce5acd8d5",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "96f2f29bd3c5da659e64c265bba07a8f9712a25cee1d31fbdae967c7bd9f0916",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b19ec6732ff3a7546800a6abcc342baf71393fafcf8edaa28f3423cf4f9c3e2c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "ab8524d77ae6642a6711b57f03ef65fa1756e5c6761b476fda1545dc3e22f957",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "4aa10e4ffe3fb698d53b1e99c9d3a8224ab543c2931bd74f95640731838198ee",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "0e636e9a953800b976af6620a419fabdcfaa644206436645e57c3bd251db7c0d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "82a18e5abf267b69e4b800314773c566e6010da254d5c5724b634421e1087d4d",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d2e992f052f025d4870f78aed85163bfb4c40e8c2e2459e5d1fe43a367ff573a",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "d1e2052d6300560df041da78c20e3fa12bba4df8bfd5ac14991325163df08b14",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e1ff48907cd2a0b53992415bc2c07b8127d1256c64a19ce94304cfe49efcab34",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "261abb7928555dbcdcd565ea8795be3bfd6d67e97d94f17220caea85c15ebe8b",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "f646c93804a49321e34771a84d279aac16feac217dbc88c0e0249881b62812f7",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b59dd94a7e49acf423d944609cbe7650d81f26a9321ec69b9bf087e7dbec6bd2",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "5ed1753dd0c8d4443914eb3cec34834e05ff442649e825a63c12ba43f285044f",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "00d2549171d3f62a4f04ee34a038095a5aa6a0dbd6e568922f88de24677c883c",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "e62c4b3fdcd2e1cc6a6df3f2df0e243edbfd0dee1e0b014a4a1d89bcf550c980",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "7c68c13e82069c829ec65b5fb7116a4315bc4c72248eb9cfcc9331aba4bce1cf",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "b22c88e6ca9426b12d650dc7a2da985bab1098c5e7a69e0ceb703b5dd4dfa941",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "17647f6b1793bceea24b2446ed66f2172ca8bb019361c1617ca38081d1b31eae",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  },
+  {
+   "vulnerability": "VULN-001",
+   "status": "not_affected",
+   "products": [
+    "github.com/felixgeelhaar/briefkasten"
+   ],
+   "_nox_locations": [
+    "go.sum:1"
+   ],
+   "_nox_fingerprint": "096af7538f6fa5947b13a0522876a5eb4477081c6be743eb36363e67869b67ff",
+   "justification": "vulnerable_code_not_present",
+   "impact_statement": "Reviewed 2026-06-05: go.sum historical entries (resolved deps current, x/net v0.54.0), test fixtures (loopback addresses, dummy tokens), README examples. No runtime exposure."
+  }
+ ]
+}

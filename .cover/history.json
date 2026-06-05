@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "timestamp": "2026-06-05T21:22:59.086696+02:00",
+      "overall": 66.9,
+      "domains": {
+        "application": {
+          "name": "application",
+          "percent": 88.5,
+          "min": 85,
+          "status": "PASS"
+        },
+        "cmd": {
+          "name": "cmd",
+          "percent": 42,
+          "min": 40,
+          "status": "PASS"
+        },
+        "domain": {
+          "name": "domain",
+          "percent": 93.1,
+          "min": 90,
+          "status": "PASS"
+        },
+        "facade": {
+          "name": "facade",
+          "percent": 67,
+          "min": 60,
+          "status": "PASS"
+        },
+        "infrastructure": {
+          "name": "infrastructure",
+          "percent": 66,
+          "min": 65,
+          "status": "PASS"
+        }
+      }
+    }
+  ]
+}

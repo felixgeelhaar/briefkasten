@@ -1,0 +1,26 @@
+version: 1
+language: go
+policy:
+  default:
+    min: 75
+  domains:
+    - name: domain
+      match:
+        - ./domain/...
+      min: 90
+    - name: application
+      match:
+        - ./application/...
+      min: 85
+    - name: infrastructure
+      match:
+        - ./infrastructure/...
+      min: 65
+    - name: facade
+      match:
+        - github.com/felixgeelhaar/briefkasten
+      min: 60
+    - name: cmd
+      match:
+        - ./cmd/...
+      min: 40
