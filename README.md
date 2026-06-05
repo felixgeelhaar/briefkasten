@@ -23,10 +23,28 @@ go install github.com/felixgeelhaar/briefkasten/cmd/briefkasten@latest
 BRIEFKASTEN_ADDR=:8090 BRIEFKASTEN_MAILDIR=./maildir briefkasten
 ```
 
-The built-in backend is a maildir-style directory: drop `.eml` files into
+The default backend is a maildir-style directory: drop `.eml` files into
 `<maildir>/new` — that's "receiving mail". Consumers fetch and mark seen;
 seen messages move to `<maildir>/cur`. Ideal for development, testing, and
 pipelines that already export messages to disk.
+
+### IMAP backend
+
+Set `BRIEFKASTEN_IMAP_ADDR` to serve a real mailbox instead:
+
+```bash
+BRIEFKASTEN_IMAP_ADDR=imap.example.org:993 \
+BRIEFKASTEN_IMAP_USER=alice \
+BRIEFKASTEN_IMAP_PASSWORD=... \
+briefkasten
+```
+
+Ids are message UIDs. `email.list_unread` is `UID SEARCH UNSEEN`,
+`email.fetch` reads `BODY.PEEK[]` (fetching never sets `\Seen`), and
+`email.mark_seen` stores `+FLAGS \Seen`. Each call dials a fresh
+connection — no state to lose across server restarts or idle timeouts.
+Optional: `BRIEFKASTEN_IMAP_MAILBOX` (default `INBOX`),
+`BRIEFKASTEN_IMAP_INSECURE=1` for plaintext IMAP (local/testing only).
 
 ## Consume
 
@@ -56,8 +74,9 @@ type Mailbox interface {
 mcp.ServeHTTP(ctx, briefkasten.NewServer(myIMAPBox), ":8090")
 ```
 
-IMAP, Gmail, Exchange, a database queue — anything that can list, fetch, and
+Gmail, Exchange, a database queue — anything that can list, fetch, and
 acknowledge. The tool contract stays identical for every consumer.
+(Maildir and IMAP ship built-in: `NewDirMailbox`, `NewIMAPMailbox`.)
 
 ## Design notes
 
