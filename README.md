@@ -34,7 +34,7 @@ Beyond tools, the full MCP surface:
 | Instructions | the consumption contract (mark seen only after successful processing) ships as server instructions |
 | **MCP Apps UI** | `ui://briefkasten/inbox` — an interactive inbox (list, read, mark seen, compose) rendered by hosts supporting the MCP Apps extension; linked from `email.list_unread` and `email.send_status` |
 
-Built on [mcp-go](https://github.com/felixgeelhaar/mcp-go).
+Built on [mcp-go](https://github.com/klarlabs-studio/mcp-go).
 
 ## Run
 
@@ -109,7 +109,7 @@ outbox:
 
 Each message is a statechart: `queued → sending → sent | failed`, with
 `failed → queued` on retry — modeled with
-[statekit](https://github.com/felixgeelhaar/statekit), persisted as files
+[statekit](https://github.com/klarlabs-studio/statekit), persisted as files
 under `outbox/<state>/`, so a restart resumes where it stopped. The worker
 delivers asynchronously; `email.send` returns immediately with the outbox
 id. SMTP delivery is fortify-wrapped (timeout, exponential-backoff retry).
@@ -186,7 +186,7 @@ connection — no state to lose across server restarts or idle timeouts.
 Optional: `BRIEFKASTEN_IMAP_MAILBOX` (default `INBOX`),
 `BRIEFKASTEN_IMAP_INSECURE=1` for plaintext IMAP (local/testing only).
 
-Remote backends are wrapped in [fortify](https://github.com/felixgeelhaar/fortify)
+Remote backends are wrapped in [fortify](https://github.com/klarlabs-studio/fortify)
 resilience automatically: per-call timeout, exponential-backoff retry,
 and a circuit breaker that fast-fails while the server is down. Bad
 message ids are never retried and never trip the breaker.
