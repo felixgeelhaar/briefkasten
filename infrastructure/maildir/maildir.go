@@ -53,7 +53,7 @@ func (m *Mailbox) Fetch(id string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	data, err := os.ReadFile(path) // #nosec G304 -- path built by safePath, which rejects ids that escape the mailbox
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("briefkasten: fetch %q: %w", id, err)
 	}

@@ -53,7 +53,6 @@ func (s *OutboxStore) Find(id string) (domain.OutboundMessage, error) {
 		return domain.OutboundMessage{}, fmt.Errorf("%w: %s", domain.ErrBadID, id)
 	}
 	for _, state := range domain.OutboxStates {
-		// #nosec G304 -- id is validated as filepath.Base above; state is an internal constant
 		raw, err := os.ReadFile(filepath.Join(s.root, state, id+".json"))
 		if errors.Is(err, os.ErrNotExist) {
 			continue
