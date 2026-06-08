@@ -101,7 +101,10 @@ func (s *Sender) deliver(msg domain.OutboundMessage) error {
 		}
 	}
 
-	raw := domain.RenderRFC5322(s.cfg.From, msg, time.Now())
+	raw, err := domain.RenderRFC5322(s.cfg.From, msg, time.Now())
+	if err != nil {
+		return fmt.Errorf("smtp render: %w", err)
+	}
 	if err := c.SendMail(s.cfg.From, msg.To, bytes.NewReader(raw)); err != nil {
 		return fmt.Errorf("smtp send: %w", err)
 	}

@@ -32,7 +32,11 @@ func NewSender(root, from string) (*Sender, error) {
 // Send writes the message as RFC 5322 into new/<id>.eml.
 func (d *Sender) Send(_ context.Context, msg domain.OutboundMessage) error {
 	path := filepath.Join(d.root, "new", msg.ID+".eml")
-	if err := os.WriteFile(path, domain.RenderRFC5322(d.from, msg, time.Now()), 0o600); err != nil {
+	raw, err := domain.RenderRFC5322(d.from, msg, time.Now())
+	if err != nil {
+		return fmt.Errorf("dirsender render: %w", err)
+	}
+	if err := os.WriteFile(path, raw, 0o600); err != nil {
 		return fmt.Errorf("dirsender write: %w", err)
 	}
 	return nil

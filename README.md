@@ -12,7 +12,7 @@ contract instead of binding to IMAP libraries:
 | `email.list_unread` | `{}` → `{"ids": ["..."]}` |
 | `email.fetch` | `{"id": "..."}` → `{"raw": "<base64 RFC 5322>"}` |
 | `email.mark_seen` | `{"id": "..."}` → `{"ok": true}` — message won't be listed again |
-| `email.send`* | `{"to": [...], "subject", "body"}` → `{"id", "state": "queued"}` |
+| `email.send`* | `{"to": [...], "subject", "body", "html_body?", "attachments?": [{"filename", "content_type", "content": "<base64>"}]}` → `{"id", "state": "queued"}` |
 | `email.send_status`* | `{"id"}` → `{"state": "queued\|sending\|sent\|failed", "attempts", "error?"}` |
 | `email.search` | `{"query", "folder?", "account?"}` → `{"ids": [...]}` — unread scope, case-insensitive; IMAP searches server-side |
 | `email.archive` | `{"id", "confirm?"}` → `{"ok": true}` — **human-confirmed** (elicitation or confirm flag); soft: filed to Archive, never destroyed |
@@ -54,7 +54,7 @@ briefkasten read   <id>
 briefkasten seen   <id>
 briefkasten search <query>
 briefkasten folders
-briefkasten send   --to a@b.c --subject S --body B
+briefkasten send   --to a@b.c --subject S --body B [--html '<p>H</p>'] [--attach file.pdf ...]
 briefkasten archive <id>      # prompts y/N; --yes to skip
 briefkasten delete  <id>      # prompts y/N; soft delete — to trash
 ```

@@ -203,15 +203,23 @@ func registerCurateTools(srv *mcp.Server, svc *application.Service) {
 
 func registerSendTools(srv *mcp.Server, ob *application.Outbox) {
 	srv.Tool("email.send").
-		Description("Queue an outbound email. Returns the outbox id; delivery is asynchronous — poll email.send_status.").
+		Description("Queue an outbound email. Optionally include an html_body (sent as an alternative to body) and attachments (each with filename, content_type, and base64-encoded content). Returns the outbox id; delivery is asynchronous — poll email.send_status.").
 		OutputSchema(map[string]any{"id": "abc123", "state": "queued"}).
 		Handler(func(_ context.Context, in struct {
-			To      []string `json:"to"`
-			Subject string   `json:"subject"`
-			Body    string   `json:"body"`
+			To          []string            `json:"to"`
+			Subject     string              `json:"subject"`
+			Body        string              `json:"body"`
+			HTMLBody    string              `json:"html_body,omitempty"`
+			Attachments []domain.Attachment `json:"attachments,omitempty"`
 		},
 		) (map[string]any, error) {
-			id, err := ob.Enqueue(domain.OutboundMessage{To: in.To, Subject: in.Subject, Body: in.Body})
+			id, err := ob.Enqueue(domain.OutboundMessage{
+				To:          in.To,
+				Subject:     in.Subject,
+				Body:        in.Body,
+				HTMLBody:    in.HTMLBody,
+				Attachments: in.Attachments,
+			})
 			if err != nil {
 				return nil, err
 			}

@@ -34,6 +34,7 @@ type (
 	Curator         = domain.Curator
 	Sender          = domain.Sender
 	OutboundMessage = domain.OutboundMessage
+	Attachment      = domain.Attachment
 )
 
 // ErrBadID rejects message ids that try to escape the mailbox.
