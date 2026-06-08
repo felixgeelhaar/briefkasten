@@ -25,5 +25,6 @@ jobs:
       pull-requests: write # nox annotate — required by the reusable workflow
     secrets: inherit
     with:
+      go-version: "1.26.3" # match go.mod (reusable workflow runs GOTOOLCHAIN=local)
       coverage: true
       cross-platform: false # Go library / MCP server — single-platform suffices
