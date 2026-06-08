@@ -3,7 +3,26 @@ package domain
 import (
 	"context"
 	"errors"
+	"fmt"
 )
+
+// Size limits guard the outbox against unbounded messages. They bound the raw
+// (pre-base64) attachment bytes; the encoded wire form is ~33% larger.
+const (
+	// MaxAttachmentBytes is the largest a single attachment may be.
+	MaxAttachmentBytes = 10 << 20 // 10 MiB
+	// MaxMessageBytes is the largest the body + all attachments may sum to.
+	MaxMessageBytes = 25 << 20 // 25 MiB
+)
+
+// Attachment is a file carried by an outbound message. Content is the raw
+// bytes; encoding/json marshals it as base64, which is also the wire form the
+// MCP email.send tool accepts.
+type Attachment struct {
+	Filename    string `json:"filename"`
+	ContentType string `json:"content_type"`
+	Content     []byte `json:"content"`
+}
 
 // OutboundMessage is one message in the outbox.
 type OutboundMessage struct {
@@ -11,6 +30,11 @@ type OutboundMessage struct {
 	To      []string `json:"to"`
 	Subject string   `json:"subject"`
 	Body    string   `json:"body"`
+	// HTMLBody, when set, is sent as an alternative representation alongside
+	// the plain-text Body (multipart/alternative).
+	HTMLBody string `json:"html_body,omitempty"`
+	// Attachments are files delivered with the message (multipart/mixed).
+	Attachments []Attachment `json:"attachments,omitempty"`
 	// State is the lifecycle state: queued, sending, sent, failed.
 	State string `json:"state"`
 	// Error holds the last delivery failure, when State is failed.
@@ -23,6 +47,23 @@ type OutboundMessage struct {
 func (m OutboundMessage) Validate() error {
 	if len(m.To) == 0 {
 		return errors.New("outbox: message needs at least one recipient")
+	}
+	total := len(m.Body) + len(m.HTMLBody)
+	for i, a := range m.Attachments {
+		switch {
+		case a.Filename == "":
+			return fmt.Errorf("outbox: attachment %d has no filename", i)
+		case a.ContentType == "":
+			return fmt.Errorf("outbox: attachment %q has no content type", a.Filename)
+		case len(a.Content) == 0:
+			return fmt.Errorf("outbox: attachment %q is empty", a.Filename)
+		case len(a.Content) > MaxAttachmentBytes:
+			return fmt.Errorf("outbox: attachment %q is %d bytes, over the %d limit", a.Filename, len(a.Content), MaxAttachmentBytes)
+		}
+		total += len(a.Content)
+	}
+	if total > MaxMessageBytes {
+		return fmt.Errorf("outbox: message is %d bytes, over the %d limit", total, MaxMessageBytes)
 	}
 	return nil
 }

@@ -97,3 +97,54 @@ func TestCLIUnknownCommand(t *testing.T) {
 		t.Fatalf("unknown = %d %q", code, errOut)
 	}
 }
+
+func TestCLISendWithAttachment(t *testing.T) {
+	root := t.TempDir()
+	outboxDir := filepath.Join(root, "outbox")
+	deliverDir := filepath.Join(root, "delivered")
+	cfgPath := filepath.Join(root, "briefkasten.yaml")
+	cfg := "maildir: " + filepath.Join(root, "in") + "\n" +
+		"outbox:\n" +
+		"  dir: " + outboxDir + "\n" +
+		"  from: me@x.y\n" +
+		"  deliver_dir: " + deliverDir + "\n"
+	if err := os.WriteFile(cfgPath, []byte(cfg), 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	attPath := filepath.Join(root, "filing.pdf")
+	if err := os.WriteFile(attPath, []byte("%PDF-1.4 fake"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	code, out, errOut := runCLI(t, "",
+		"send", "--config", cfgPath,
+		"--to", "advisor@x.y", "--subject", "Filing", "--body", "see attached",
+		"--attach", attPath)
+	if code != 0 {
+		t.Fatalf("send failed: code=%d out=%q err=%q", code, out, errOut)
+	}
+	if !strings.Contains(out, "sent") {
+		t.Errorf("send output = %q, want sent state", out)
+	}
+
+	// DirSender drops the rendered message as .eml in deliver_dir/new/.
+	entries, err := os.ReadDir(filepath.Join(deliverDir, "new"))
+	if err != nil || len(entries) == 0 {
+		t.Fatalf("no delivered message: %v", err)
+	}
+	raw, err := os.ReadFile(filepath.Join(deliverDir, "new", entries[0].Name()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := string(raw)
+	if !strings.Contains(got, "multipart/mixed") {
+		t.Errorf("delivered message is not multipart/mixed:\n%s", got)
+	}
+	if !strings.Contains(got, "filename=filing.pdf") && !strings.Contains(got, `filename="filing.pdf"`) {
+		t.Errorf("delivered message missing attachment filename:\n%s", got)
+	}
+	if !strings.Contains(got, "application/pdf") {
+		t.Errorf("delivered message missing attachment content type:\n%s", got)
+	}
+}

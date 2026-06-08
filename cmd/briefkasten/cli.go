@@ -6,7 +6,10 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"mime"
+	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"go.klarlabs.de/briefkasten"
@@ -30,6 +33,9 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	to := fs.String("to", "", "recipients, comma-separated (send)")
 	subject := fs.String("subject", "", "subject (send)")
 	body := fs.String("body", "", "body (send)")
+	htmlBody := fs.String("html", "", "HTML alternative body (send)")
+	var attach stringList
+	fs.Var(&attach, "attach", "file to attach; repeatable (send)")
 	if err := fs.Parse(rest); err != nil {
 		return 2
 	}
@@ -124,10 +130,21 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 		recipients := splitList(*to)
 		if len(recipients) == 0 || *subject == "" || *body == "" {
-			fmt.Fprintln(stderr, "usage: briefkasten send --to a@b.c --subject S --body B")
+			fmt.Fprintln(stderr, "usage: briefkasten send --to a@b.c --subject S --body B [--html H] [--attach FILE ...]")
 			return 2
 		}
-		id, err := ob.Enqueue(briefkasten.OutboundMessage{To: recipients, Subject: *subject, Body: *body})
+		attachments, err := loadAttachments(attach)
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		id, err := ob.Enqueue(briefkasten.OutboundMessage{
+			To:          recipients,
+			Subject:     *subject,
+			Body:        *body,
+			HTMLBody:    *htmlBody,
+			Attachments: attachments,
+		})
 		if err != nil {
 			fmt.Fprintln(stderr, err)
 			return 1
@@ -219,6 +236,41 @@ func splitList(raw string) []string {
 		}
 	}
 	return out
+}
+
+// stringList is a repeatable string flag (e.g. --attach a --attach b).
+type stringList []string
+
+func (s *stringList) String() string { return strings.Join(*s, ", ") }
+
+func (s *stringList) Set(v string) error {
+	*s = append(*s, v)
+	return nil
+}
+
+// loadAttachments reads each file path into an Attachment, inferring the
+// content type from the extension (falling back to content sniffing).
+func loadAttachments(paths []string) ([]briefkasten.Attachment, error) {
+	if len(paths) == 0 {
+		return nil, nil
+	}
+	atts := make([]briefkasten.Attachment, 0, len(paths))
+	for _, p := range paths {
+		content, err := os.ReadFile(p) // #nosec G304 -- attachment path is supplied by the operator running the CLI
+		if err != nil {
+			return nil, fmt.Errorf("attach %q: %w", p, err)
+		}
+		ctype := mime.TypeByExtension(filepath.Ext(p))
+		if ctype == "" {
+			ctype = http.DetectContentType(content)
+		}
+		atts = append(atts, briefkasten.Attachment{
+			Filename:    filepath.Base(p),
+			ContentType: ctype,
+			Content:     content,
+		})
+	}
+	return atts, nil
 }
 
 // buildService composes the shared application service from the config —
