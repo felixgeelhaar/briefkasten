@@ -258,25 +258,17 @@ func (c *Config) BuildWatcher() Watcher {
 	}
 }
 
-// BuildOutbox constructs the configured outbox with its sender, or
-// (nil, "", nil) when sending is not configured. SMTP wins over the dir
-// sender when both are set.
-func (c *Config) BuildOutbox() (*Outbox, string, error) {
-	if c.Outbox.Dir == "" {
-		return nil, "", nil
-	}
-	var (
-		sender Sender
-		desc   string
-		err    error
-	)
+// buildSender constructs the configured outbound sender (SMTP when an address
+// is set, else the dir sender) and a short description. It is the swappable
+// unit for runtime reconfiguration.
+func (c *Config) buildSender() (Sender, string, error) {
 	if c.Outbox.SMTP.Addr != "" {
 		if c.Outbox.SMTP.OAuth2 != nil {
 			if err := c.Outbox.SMTP.OAuth2.LoadCredentials(context.Background(), c.Outbox.SMTP.Username); err != nil {
 				return nil, "", fmt.Errorf("config: smtp oauth2: %w", err)
 			}
 		}
-		sender, err = NewSMTPSender(SMTPConfig{
+		sender, err := NewSMTPSender(SMTPConfig{
 			Addr:        c.Outbox.SMTP.Addr,
 			From:        c.Outbox.From,
 			Username:    c.Outbox.SMTP.Username,
@@ -285,11 +277,26 @@ func (c *Config) BuildOutbox() (*Outbox, string, error) {
 			Insecure:    c.Outbox.SMTP.Insecure,
 			OAuth2:      c.Outbox.SMTP.OAuth2,
 		})
-		desc = "smtp " + c.Outbox.SMTP.Addr
-	} else {
-		sender, err = NewDirSender(c.Outbox.DeliverDir, c.Outbox.From)
-		desc = "dir " + c.Outbox.DeliverDir
+		if err != nil {
+			return nil, "", err
+		}
+		return sender, "smtp " + c.Outbox.SMTP.Addr, nil
 	}
+	sender, err := NewDirSender(c.Outbox.DeliverDir, c.Outbox.From)
+	if err != nil {
+		return nil, "", err
+	}
+	return sender, "dir " + c.Outbox.DeliverDir, nil
+}
+
+// BuildOutbox constructs the configured outbox with its sender, or
+// (nil, "", nil) when sending is not configured. SMTP wins over the dir
+// sender when both are set.
+func (c *Config) BuildOutbox() (*Outbox, string, error) {
+	if c.Outbox.Dir == "" {
+		return nil, "", nil
+	}
+	sender, desc, err := c.buildSender()
 	if err != nil {
 		return nil, "", err
 	}

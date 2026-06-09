@@ -53,7 +53,6 @@ type OAuth2Settings struct {
 	CredentialsJSON []byte `yaml:"-"`
 
 	source oauth2.TokenSource
-	loaded bool // LoadCredentials ran (idempotency guard)
 }
 
 // LoadCredentials hydrates the settings from a Google credentials file
@@ -69,14 +68,13 @@ type OAuth2Settings struct {
 //     provider's consent flow) is still required to mint tokens.
 //
 // `user` is the mailbox address (the IMAP/SMTP username) the tokens act for.
+// It is safe to call repeatedly — it rebuilds from the current
+// CredentialsFile/JSON each time, so a runtime reconfiguration (config.set)
+// re-reads the new credentials.
 func (o *OAuth2Settings) LoadCredentials(ctx context.Context, user string) error {
-	if o.loaded {
-		return nil
-	}
 	raw := o.CredentialsJSON
 	if len(raw) == 0 {
 		if o.CredentialsFile == "" {
-			o.loaded = true
 			return nil
 		}
 		b, err := os.ReadFile(o.CredentialsFile) // #nosec G304 -- path is operator-supplied config
@@ -121,7 +119,6 @@ func (o *OAuth2Settings) LoadCredentials(ctx context.Context, user string) error
 	default:
 		return errors.New("oauth2: unrecognised credentials file (want a service-account key or an OAuth client secret)")
 	}
-	o.loaded = true
 	return nil
 }
 
