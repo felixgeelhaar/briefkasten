@@ -130,3 +130,78 @@ func TestConfigSetInvalidKeepsOldBackend(t *testing.T) {
 	}
 	_ = context.Background()
 }
+
+// TestApplyOAuth2Patch builds a fresh settings struct, overlaying the patch on
+// current values.
+func TestApplyOAuth2Patch(t *testing.T) {
+	cur := &OAuth2Settings{ClientID: "old", RefreshToken: "rtok"}
+	got := applyOAuth2Patch(cur, &oauth2Patch{CredentialsFile: "/g.json", ClientID: "new"})
+	if got == cur {
+		t.Error("patch must return a fresh struct (dropping the cached token source)")
+	}
+	if got.ClientID != "new" || got.RefreshToken != "rtok" || got.CredentialsFile != "/g.json" {
+		t.Errorf("merged = %+v", got)
+	}
+}
+
+// TestConfigSetReconfiguresOAuth2 patches the IMAP OAuth2 credentials file at
+// runtime; the new settings are read and applied without a restart.
+func TestConfigSetReconfiguresOAuth2(t *testing.T) {
+	// A downloaded OAuth client secret (low-entropy, no real secret).
+	credPath := filepath.Join(t.TempDir(), "google.json")
+	clientJSON := `{"web":{"client_id":"cid.apps.googleusercontent.com","client_secret":"x","token_uri":"https://oauth2.googleapis.com/token","auth_uri":"https://accounts.google.com/o/oauth2/auth","redirect_uris":["http://127.0.0.1/cb"]}}`
+	if err := os.WriteFile(credPath, []byte(clientJSON), 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg, _ := LoadConfig("")
+	cfg.RuntimeConfig = true
+	cfg.Maildir = newRootDir(t)
+	client := newConfigClient(t, cfg)
+
+	got := rootCallMap(t, client, "config.set", map[string]any{
+		"backend": "imap",
+		"imap": map[string]any{
+			"addr":     "imap.gmail.com:993",
+			"username": "you@gmail.com",
+			"oauth2":   map[string]any{"credentials_file": credPath, "refresh_token": "rtok"},
+		},
+	})
+	if got["ok"] != true {
+		t.Fatalf("config.set = %v", got)
+	}
+	// The live config carries the new credentials file, hydrated from disk.
+	if cfg.IMAP.OAuth2 == nil || cfg.IMAP.OAuth2.CredentialsFile != credPath {
+		t.Fatalf("oauth2 not reconfigured: %+v", cfg.IMAP.OAuth2)
+	}
+	if cfg.IMAP.OAuth2.ClientID != "cid.apps.googleusercontent.com" {
+		t.Errorf("client_id not hydrated from the credentials file: %q", cfg.IMAP.OAuth2.ClientID)
+	}
+}
+
+// TestConfigSetSwapsSender reconfigures the outbound SMTP sender at runtime and
+// reports the new sender in the result.
+func TestConfigSetSwapsSender(t *testing.T) {
+	cfg, _ := LoadConfig("")
+	cfg.RuntimeConfig = true
+	cfg.Maildir = newRootDir(t)
+	cfg.Outbox = OutboxSettings{
+		Dir:  filepath.Join(t.TempDir(), "outbox"),
+		From: "ops@example.org",
+		SMTP: SMTPSettings{Addr: "smtp.example.org:587"},
+	}
+	client := newConfigClient(t, cfg)
+
+	got := rootCallMap(t, client, "config.set", map[string]any{
+		"outbox": map[string]any{"smtp": map[string]any{"addr": "smtp2.example.org:587"}},
+	})
+	if got["ok"] != true {
+		t.Fatalf("config.set = %v", got)
+	}
+	if s, _ := got["sender"].(string); !strings.Contains(s, "smtp2.example.org") {
+		t.Errorf("sender not swapped: %v", got["sender"])
+	}
+	if cfg.Outbox.SMTP.Addr != "smtp2.example.org:587" {
+		t.Errorf("live smtp addr = %q", cfg.Outbox.SMTP.Addr)
+	}
+}

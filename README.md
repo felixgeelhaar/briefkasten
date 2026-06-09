@@ -186,11 +186,31 @@ With `runtime_config: true` two extra tools are served:
 | Tool | Does |
 |---|---|
 | `config.get` | Active configuration — credentials redacted |
-| `config.set` | Partial patch: validates the new backend, hot-swaps it, persists to the config file |
+| `config.set` | Partial patch: validates the new backend **and outbound sender**, hot-swaps them, persists to the config file |
 
-A failed `config.set` leaves the old backend serving. Off by default —
-`config.set` accepts mailbox credentials, so enable it only on trusted
-networks.
+`config.set` reconfigures **without a restart** — the reading backend and the
+outbound sender are swapped live (the delivery worker keeps running). It patches
+the IMAP backend, the outbox SMTP sender, and the **OAuth2 credentials** of
+either, including a Google `credentials_file`:
+
+```jsonc
+// point the sender at a new Google credentials file, live:
+{
+  "outbox": {
+    "smtp": {
+      "addr": "smtp.gmail.com:587",
+      "username": "you@gmail.com",
+      "oauth2": { "credentials_file": "/run/secrets/google.json" }
+    }
+  }
+}
+```
+
+Patching any `oauth2` field rebuilds the OAuth2 settings from scratch, so a new
+credentials file is re-read and a stale token source is dropped. A failed
+`config.set` leaves the old backend and sender serving — validation happens
+before either swap. Off by default — `config.set` accepts mailbox credentials,
+so enable it only on trusted networks.
 
 The default backend is a maildir-style directory: drop `.eml` files into
 `<maildir>/new` — that's "receiving mail". Consumers fetch and mark seen;

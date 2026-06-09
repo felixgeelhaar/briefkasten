@@ -48,6 +48,8 @@ type (
 	Outbox = application.Outbox
 	// Switchable is a runtime-swappable mailbox decorator.
 	Switchable = application.Switchable
+	// SwitchableSender is a runtime-swappable outbound-sender decorator.
+	SwitchableSender = application.SwitchableSender
 )
 
 // NewService wires the shared use cases over a default mailbox and named
@@ -58,6 +60,9 @@ func NewService(mb Mailbox, accounts map[string]Mailbox) *Service {
 
 // NewSwitchable wraps an initial backend for runtime swapping.
 func NewSwitchable(mb Mailbox) *Switchable { return application.NewSwitchable(mb) }
+
+// NewSwitchableSender wraps an initial sender for runtime swapping.
+func NewSwitchableSender(s Sender) *SwitchableSender { return application.NewSwitchableSender(s) }
 
 // DirMailbox and IMAPMailbox are the built-in backends.
 //
