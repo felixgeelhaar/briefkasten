@@ -9,18 +9,20 @@ contract instead of binding to IMAP libraries:
 
 | Tool | Does |
 |---|---|
-| `email.list_unread` | `{}` → `{"ids": ["..."]}` |
+| `email.list_unread` | `{"limit?"}` → `{"ids": ["..."], "total": N}` |
 | `email.fetch` | `{"id": "..."}` → `{"raw": "<base64 RFC 5322>"}` |
 | `email.mark_seen` | `{"id": "..."}` → `{"ok": true}` — message won't be listed again |
-| `email.send`* | `{"to": [...], "subject", "body", "html_body?", "attachments?": [{"filename", "content_type", "content": "<base64>"}]}` → `{"id", "state": "queued"}` |
+| `email.send`* | `{"to": [...], "subject", "body", "html_body?", "attachments?": [{"filename", "content_type", "content": "<base64>"}]}` → `{"id", "state": "queued"}` — attachments ≤ 10 MiB each, ≤ 25 MiB per message |
 | `email.send_status`* | `{"id"}` → `{"state": "queued\|sending\|sent\|failed", "attempts", "error?"}` |
-| `email.search` | `{"query", "folder?", "account?"}` → `{"ids": [...]}` — unread scope, case-insensitive; IMAP searches server-side |
+| `email.retry`* | `{"id"}` → `{"id", "state": "queued"}` — re-queue a failed send |
+| `email.search` | `{"query", "folder?", "account?", "limit?"}` → `{"ids": [...], "total": N}` — unread scope, case-insensitive; IMAP searches server-side |
 | `email.archive` | `{"id", "confirm?"}` → `{"ok": true}` — **human-confirmed** (elicitation or confirm flag); soft: filed to Archive, never destroyed |
 | `email.delete` | `{"id", "confirm?"}` → `{"ok": true}` — **human-confirmed**; soft delete to Trash, never expunged |
 
 `email.list_unread`, `email.fetch`, `email.mark_seen`, and `email.search`
 accept optional `folder` (see `email://folders`) and `account` (see
-`email://accounts`) arguments.
+`email://accounts`) arguments. `limit` caps the ids returned; `total`
+always reports the full count.
 
 \* Sending registers only when an outbox is configured.
 
@@ -29,7 +31,7 @@ Beyond tools, the full MCP surface:
 | Surface | What |
 |---|---|
 | Resources | `email://inbox`, `email://inbox/{id}` (raw RFC 5322), `email://outbox`, `email://outbox/{id}`, `email://folders`, `email://accounts` — read state without spending tool calls; `{id}` completes from live unread ids |
-| Prompts | `summarize_inbox` (embeds every unread message), `draft_reply(id)` (embeds the original) |
+| Prompts | `summarize_inbox(count?)` (embeds up to `count` unread messages, default 20, each truncated at 16 KiB), `draft_reply(id)` (embeds the original, truncated at 16 KiB) |
 | Annotations | read tools are `readOnlyHint`, `mark_seen` is `idempotentHint`, `config.set` is `destructiveHint` |
 | Instructions | the consumption contract (mark seen only after successful processing) ships as server instructions |
 | **MCP Apps UI** | `ui://briefkasten/inbox` — an interactive inbox (list, read, mark seen, compose) rendered by hosts supporting the MCP Apps extension; linked from `email.list_unread` and `email.send_status` |
@@ -55,6 +57,8 @@ briefkasten seen   <id>
 briefkasten search <query>
 briefkasten folders
 briefkasten send   --to a@b.c --subject S --body B [--html '<p>H</p>'] [--attach file.pdf ...]
+briefkasten retry  <id>       # re-queue a failed send and deliver
+briefkasten outbox            # outbound ids by lifecycle state
 briefkasten archive <id>      # prompts y/N; --yes to skip
 briefkasten delete  <id>      # prompts y/N; soft delete — to trash
 ```
@@ -110,7 +114,10 @@ outbox:
 Each message is a statechart: `queued → sending → sent | failed`, with
 `failed → queued` on retry — modeled with
 [statekit](https://github.com/klarlabs-studio/statekit), persisted as files
-under `outbox/<state>/`, so a restart resumes where it stopped. The worker
+under `outbox/<state>/`, so a restart resumes where it stopped. Startup
+recovery repairs an unclean shutdown: a message stranded mid-send moves to
+`failed` (the wire outcome is unknowable — `email.retry` re-queues it
+deliberately rather than risking a silent duplicate send). The worker
 delivers asynchronously; `email.send` returns immediately with the outbox
 id. SMTP delivery is fortify-wrapped (timeout, exponential-backoff retry).
 Env overrides: `BRIEFKASTEN_OUTBOX_DIR` / `_FROM` / `_DELIVER_DIR`,

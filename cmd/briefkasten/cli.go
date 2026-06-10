@@ -157,6 +157,61 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		msg, _ := ob.Status(id)
 		emit(fmt.Sprintf("%s: %s", msg.State, id), map[string]any{"id": id, "state": msg.State})
 
+	case "retry":
+		id := fs.Arg(0)
+		if id == "" {
+			fmt.Fprintln(stderr, "usage: briefkasten retry <id>")
+			return 2
+		}
+		ob, _, err := cfg.BuildOutbox()
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		if ob == nil {
+			fmt.Fprintln(stderr, "retry: no outbox configured (set outbox.dir)")
+			return 1
+		}
+		if err := ob.Retry(id); err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		if _, err := ob.ProcessOnce(contextTODO()); err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		msg, _ := ob.Status(id)
+		human := fmt.Sprintf("%s: %s", msg.State, id)
+		machine := map[string]any{"id": id, "state": msg.State}
+		if msg.Error != "" {
+			human += " (" + msg.Error + ")"
+			machine["error"] = msg.Error
+		}
+		emit(human, machine)
+
+	case "outbox":
+		ob, _, err := cfg.BuildOutbox()
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		if ob == nil {
+			fmt.Fprintln(stderr, "outbox: no outbox configured (set outbox.dir)")
+			return 1
+		}
+		summary, err := ob.Summary()
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		var lines []string
+		for _, state := range []string{"queued", "sending", "sent", "failed"} {
+			for _, id := range summary[state] {
+				lines = append(lines, state+": "+id)
+			}
+		}
+		emit(strings.Join(lines, "\n"), summary)
+
 	case "archive", "delete":
 		id := fs.Arg(0)
 		if id == "" {
@@ -182,7 +237,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	default:
 		fmt.Fprintf(stderr, `unknown command %q
 
-usage: briefkasten [serve|list|read|seen|search|folders|send|archive|delete]
+usage: briefkasten [serve|list|read|seen|search|folders|send|retry|outbox|archive|delete]
 
 Curation is soft: archive files away, delete moves to trash — nothing is
 ever expunged. Both prompt for confirmation unless --yes.
@@ -220,7 +275,7 @@ func loadConfigPath(explicit string) (*briefkasten.Config, error) {
 
 func needsMailbox(cmd string) bool {
 	switch cmd {
-	case "send":
+	case "send", "retry", "outbox":
 		return false
 	default:
 		return true

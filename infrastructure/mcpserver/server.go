@@ -77,20 +77,25 @@ func New(svc *application.Service, serverOpts ...Option) *mcp.Server {
 
 func registerTools(srv *mcp.Server, svc *application.Service) {
 	srv.Tool("email.list_unread").
-		Description("List ids of unread messages. Optional: folder (see email://folders), account (see email://accounts).").
+		Description("List ids of unread messages. Optional: folder (see email://folders), account (see email://accounts), limit (cap the ids returned; total always reports the full count).").
 		ReadOnly().
 		UIResource(InboxUIResourceURI).
-		OutputSchema(map[string]any{"ids": []string{"m1.eml"}}).
+		OutputSchema(map[string]any{"ids": []string{"m1.eml"}, "total": 1}).
 		Handler(func(_ context.Context, in struct {
 			Folder  string `json:"folder,omitempty"`
 			Account string `json:"account,omitempty"`
+			Limit   int    `json:"limit,omitempty"`
 		},
 		) (map[string]any, error) {
 			ids, err := svc.ListUnread(in.Account, in.Folder)
 			if err != nil {
 				return nil, err
 			}
-			return map[string]any{"ids": ids}, nil
+			total := len(ids)
+			if in.Limit > 0 && in.Limit < total {
+				ids = ids[:in.Limit]
+			}
+			return map[string]any{"ids": ids, "total": total}, nil
 		})
 
 	srv.Tool("email.fetch").
@@ -127,20 +132,25 @@ func registerTools(srv *mcp.Server, svc *application.Service) {
 		})
 
 	srv.Tool("email.search").
-		Description("Search unread messages for a text query (case-insensitive). Returns matching ids.").
+		Description("Search unread messages for a text query (case-insensitive). Returns matching ids. Optional: folder, account, limit (cap the ids returned; total always reports the full count).").
 		ReadOnly().
-		OutputSchema(map[string]any{"ids": []string{"m1.eml"}}).
+		OutputSchema(map[string]any{"ids": []string{"m1.eml"}, "total": 1}).
 		Handler(func(_ context.Context, in struct {
 			Query   string `json:"query"`
 			Folder  string `json:"folder,omitempty"`
 			Account string `json:"account,omitempty"`
+			Limit   int    `json:"limit,omitempty"`
 		},
 		) (map[string]any, error) {
 			ids, err := svc.Search(in.Account, in.Folder, in.Query)
 			if err != nil {
 				return nil, err
 			}
-			return map[string]any{"ids": ids}, nil
+			total := len(ids)
+			if in.Limit > 0 && in.Limit < total {
+				ids = ids[:in.Limit]
+			}
+			return map[string]any{"ids": ids, "total": total}, nil
 		})
 }
 
@@ -164,10 +174,11 @@ func confirmCuration(ctx context.Context, confirmed bool, action, id string) err
 			if result.Action == "accept" {
 				return nil
 			}
-			return fmt.Errorf("briefkasten: %s of %q declined by user", action, id)
+			return fmt.Errorf("briefkasten: %s of %q declined by user — do not retry without new instructions", action, id)
 		}
+		return fmt.Errorf("briefkasten: confirmation elicitation failed (%w) — ask the user yourself, then retry with confirm=true", err)
 	}
-	return errors.New("briefkasten: confirmation required — ask the user, then retry with confirm=true")
+	return errors.New("briefkasten: confirmation required and the client does not support elicitation — ask the user, then retry with confirm=true")
 }
 
 func registerCurateTools(srv *mcp.Server, svc *application.Service) {
@@ -209,7 +220,7 @@ func registerCurateTools(srv *mcp.Server, svc *application.Service) {
 
 func registerSendTools(srv *mcp.Server, ob *application.Outbox) {
 	srv.Tool("email.send").
-		Description("Queue an outbound email. Optionally include an html_body (sent as an alternative to body) and attachments (each with filename, content_type, and base64-encoded content). Returns the outbox id; delivery is asynchronous — poll email.send_status.").
+		Description("Queue an outbound email. Optionally include an html_body (sent as an alternative to body) and attachments (each with filename, content_type, and base64-encoded content; max 10 MiB per attachment, 25 MiB per message). Returns the outbox id; delivery is asynchronous — poll email.send_status.").
 		OutputSchema(map[string]any{"id": "abc123", "state": "queued"}).
 		Handler(func(_ context.Context, in struct {
 			To          []string            `json:"to"`
@@ -250,5 +261,19 @@ func registerSendTools(srv *mcp.Server, ob *application.Outbox) {
 				out["error"] = msg.Error
 			}
 			return out, nil
+		})
+
+	srv.Tool("email.retry").
+		Description("Re-queue a failed outbound email for another delivery attempt. Only messages in the failed state can be retried (see email.send_status).").
+		Idempotent().
+		OutputSchema(map[string]any{"id": "abc123", "state": "queued"}).
+		Handler(func(_ context.Context, in struct {
+			ID string `json:"id"`
+		},
+		) (map[string]any, error) {
+			if err := ob.Retry(in.ID); err != nil {
+				return nil, err
+			}
+			return map[string]any{"id": in.ID, "state": "queued"}, nil
 		})
 }

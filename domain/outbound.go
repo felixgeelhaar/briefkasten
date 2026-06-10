@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/mail"
+	"strings"
 )
 
 // Size limits guard the outbox against unbounded messages. They bound the raw
@@ -43,10 +45,28 @@ type OutboundMessage struct {
 	Attempts int `json:"attempts"`
 }
 
+// ValidateAddress rejects strings that are not a single RFC 5322 address.
+// Parsing also rules out CR/LF, closing the header-injection door for
+// values that are rendered into From/To headers verbatim.
+func ValidateAddress(addr string) error {
+	if strings.ContainsAny(addr, "\r\n") {
+		return fmt.Errorf("outbox: address %q contains line breaks", addr)
+	}
+	if _, err := mail.ParseAddress(addr); err != nil {
+		return fmt.Errorf("outbox: invalid address %q: %w", addr, err)
+	}
+	return nil
+}
+
 // Validate enforces the message invariants.
 func (m OutboundMessage) Validate() error {
 	if len(m.To) == 0 {
 		return errors.New("outbox: message needs at least one recipient")
+	}
+	for _, to := range m.To {
+		if err := ValidateAddress(to); err != nil {
+			return err
+		}
 	}
 	total := len(m.Body) + len(m.HTMLBody)
 	for i, a := range m.Attachments {
