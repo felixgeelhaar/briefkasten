@@ -281,6 +281,10 @@ res, _ := c.CallTool(ctx, "email.list_unread", map[string]any{})
 // so failures stay unread for retry.
 ```
 
+Instead of polling, subscribe to `email://inbox` (mcp-go ≥ 1.17 supports
+resource subscriptions over HTTP+SSE) — the server pushes
+`notifications/resources/updated` when new mail arrives.
+
 ## Bring your own backend
 
 Implement the `Mailbox` port and serve it:
