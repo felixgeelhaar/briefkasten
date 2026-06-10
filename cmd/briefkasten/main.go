@@ -13,6 +13,8 @@
 //	briefkasten search <query>
 //	briefkasten folders
 //	briefkasten send   --to a@b.c --subject S --body B
+//	briefkasten retry  <id>    (re-queue + deliver a failed send)
+//	briefkasten outbox         (outbound ids by lifecycle state)
 //	briefkasten archive <id>   (prompts; --yes to skip)
 //	briefkasten delete  <id>   (prompts; --yes to skip — soft delete, to trash)
 //

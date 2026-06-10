@@ -123,13 +123,19 @@ func Resilient(mb Mailbox, cfg ResilienceConfig) *ResilientMailbox {
 }
 
 // NewOutbox binds a maildir-backed outbox store to the sender — the
-// pre-restructure convenience constructor.
+// pre-restructure convenience constructor. The store is recovered from
+// any unclean shutdown before use: duplicate state files are repaired and
+// messages stranded mid-send are moved to failed for explicit retry.
 func NewOutbox(root string, sender Sender) (*Outbox, error) {
 	store, err := maildir.NewOutboxStore(root)
 	if err != nil {
 		return nil, err
 	}
-	return application.NewOutbox(store, sender), nil
+	ob := application.NewOutbox(store, sender)
+	if err := ob.Recover(); err != nil {
+		return nil, err
+	}
+	return ob, nil
 }
 
 // MCP presentation.

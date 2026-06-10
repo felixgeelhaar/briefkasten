@@ -57,6 +57,9 @@ func NewSender(cfg Config) (*Sender, error) {
 	if cfg.From == "" {
 		return nil, errors.New("smtp: From is required")
 	}
+	if err := domain.ValidateAddress(cfg.From); err != nil {
+		return nil, fmt.Errorf("smtp: %w", err)
+	}
 	return &Sender{
 		cfg: cfg,
 		rt: retry.New[any](retry.Config{
@@ -71,14 +74,14 @@ func NewSender(cfg Config) (*Sender, error) {
 // Send delivers the message, retrying transient failures.
 func (s *Sender) Send(ctx context.Context, msg domain.OutboundMessage) error {
 	_, err := s.rt.Execute(ctx, func(ctx context.Context) (any, error) {
-		return s.to.Execute(ctx, 30*time.Second, func(context.Context) (any, error) {
-			return nil, s.deliver(msg)
+		return s.to.Execute(ctx, 30*time.Second, func(ctx context.Context) (any, error) {
+			return nil, s.deliver(ctx, msg)
 		})
 	})
 	return err
 }
 
-func (s *Sender) deliver(msg domain.OutboundMessage) error {
+func (s *Sender) deliver(ctx context.Context, msg domain.OutboundMessage) error {
 	c, err := s.dial()
 	if err != nil {
 		return fmt.Errorf("smtp dial %s: %w", s.cfg.Addr, err)
@@ -87,7 +90,7 @@ func (s *Sender) deliver(msg domain.OutboundMessage) error {
 
 	if s.cfg.OAuth2 != nil {
 		host, port := auth.SplitHostPort(s.cfg.Addr, 587)
-		saslAuth, err := s.cfg.OAuth2.SASLClient(context.Background(), s.cfg.Username, host, port)
+		saslAuth, err := s.cfg.OAuth2.SASLClient(ctx, s.cfg.Username, host, port)
 		if err != nil {
 			return err
 		}
