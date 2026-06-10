@@ -5,7 +5,11 @@ import (
 	"fmt"
 	"os"
 
+	authdomain "github.com/klarlabs-studio/auth-go/domain"
+	mcp "go.klarlabs.de/mcp"
 	"gopkg.in/yaml.v3"
+
+	"go.klarlabs.de/briefkasten/infrastructure/mcpserver"
 )
 
 // Config configures the briefkasten server. Values are resolved in
@@ -32,10 +36,35 @@ type Config struct {
 	// reconfigure the backend at runtime. Off by default: config.set
 	// accepts mailbox credentials, so only enable it on trusted networks.
 	RuntimeConfig bool `yaml:"runtime_config"`
+	// Auth guards the MCP endpoint. Off by default (open endpoint —
+	// fine on localhost; configure it before exposing the port).
+	Auth AuthSettings `yaml:"auth"`
 
 	// path remembers where the config was loaded from so runtime changes
 	// can be persisted back. Empty when no file was used.
 	path string
+}
+
+// AuthSettings guards the MCP HTTP endpoint with basic auth. Every
+// request must carry the credential; the MCP handshake (initialize,
+// ping) stays open so clients can negotiate first.
+type AuthSettings struct {
+	Basic BasicAuthSettings `yaml:"basic"`
+}
+
+// BasicAuthSettings is one username with either a plaintext password
+// (hashed with argon2id at startup — consistent with the mailbox
+// passwords this file already holds) or a pre-computed argon2id PHC
+// hash, which wins when both are set.
+type BasicAuthSettings struct {
+	Username     string `yaml:"username"`
+	Password     string `yaml:"password"`
+	PasswordHash string `yaml:"password_hash"`
+}
+
+// Enabled reports whether basic auth is configured.
+func (b BasicAuthSettings) Enabled() bool {
+	return b.Username != "" && (b.Password != "" || b.PasswordHash != "")
 }
 
 // IMAPSettings is the serializable subset of IMAPConfig.
@@ -166,6 +195,9 @@ func (c *Config) ApplyEnv() {
 	if v := os.Getenv("BRIEFKASTEN_RUNTIME_CONFIG"); v != "" {
 		c.RuntimeConfig = v == "1" || v == "true"
 	}
+	overlay(&c.Auth.Basic.Username, "BRIEFKASTEN_AUTH_USER")
+	overlay(&c.Auth.Basic.Password, "BRIEFKASTEN_AUTH_PASSWORD")
+	overlay(&c.Auth.Basic.PasswordHash, "BRIEFKASTEN_AUTH_PASSWORD_HASH")
 }
 
 // overlayCredentialsFile sets the OAuth2 credentials-file path from an env var,
@@ -304,4 +336,28 @@ func (c *Config) BuildOutbox() (*Outbox, string, error) {
 		return nil, "", err
 	}
 	return ob, desc, nil
+}
+
+// BuildAuthMiddleware returns the MCP middleware guarding the endpoint,
+// or nil when auth is not configured. A plaintext password is hashed
+// with argon2id at startup; a pre-computed password_hash (PHC string)
+// wins when both are set.
+func (c *Config) BuildAuthMiddleware() (mcp.Middleware, error) {
+	b := c.Auth.Basic
+	if !b.Enabled() {
+		return nil, nil
+	}
+	var (
+		hash authdomain.PasswordHash
+		err  error
+	)
+	if b.PasswordHash != "" {
+		hash, err = authdomain.PasswordHashFromString(b.PasswordHash)
+	} else {
+		hash, err = authdomain.HashPassword(b.Password, authdomain.DefaultArgon2idParams())
+	}
+	if err != nil {
+		return nil, fmt.Errorf("config: auth.basic: %w", err)
+	}
+	return mcpserver.BasicAuth(b.Username, hash), nil
 }
