@@ -9,7 +9,7 @@ require (
 	github.com/fsnotify/fsnotify v1.10.1
 	go.klarlabs.de/bolt v1.5.2
 	go.klarlabs.de/fortify v1.6.0
-	go.klarlabs.de/mcp v1.16.0
+	go.klarlabs.de/mcp v1.17.0
 	go.klarlabs.de/statekit v1.8.0
 	golang.org/x/oauth2 v0.36.0
 	gopkg.in/yaml.v3 v3.0.1

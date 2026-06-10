@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"runtime/debug"
 
 	mcp "go.klarlabs.de/mcp"
 	"go.klarlabs.de/mcp/server"
@@ -34,6 +35,20 @@ soft moves and require human confirmation: the host is asked via
 elicitation, or you must ask the user and pass confirm=true. Nothing is
 ever expunged.`
 
+// moduleVersion reports the briefkasten module version baked into the
+// binary, so the MCP server-info version never drifts from the release
+// tag. "dev" when built from a source checkout.
+func moduleVersion() string {
+	if bi, ok := debug.ReadBuildInfo(); ok {
+		for _, dep := range append(bi.Deps, &bi.Main) {
+			if dep.Path == "go.klarlabs.de/briefkasten" && dep.Version != "" && dep.Version != "(devel)" {
+				return dep.Version
+			}
+		}
+	}
+	return "dev"
+}
+
 // Option configures the server surface.
 type Option func(*options)
 
@@ -57,7 +72,7 @@ func New(svc *application.Service, serverOpts ...Option) *mcp.Server {
 
 	srv := mcp.NewServer(mcp.ServerInfo{
 		Name:    "briefkasten",
-		Version: "0.8.0",
+		Version: moduleVersion(),
 		// Advertise resources.subscribe so hosts can subscribe to email://inbox
 		// and receive notifications/resources/updated when new mail arrives
 		// (a watcher drives the push; see cmd/briefkasten).
