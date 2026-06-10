@@ -108,14 +108,28 @@ func serve() int {
 		}()
 	}
 
+	authMW, err := cfg.BuildAuthMiddleware()
+	if err != nil {
+		log.Error().Err(err).Msg("auth init failed")
+		return 1
+	}
+
 	log.Info().
 		Str("addr", cfg.Addr).
 		Str("backend", cfg.ResolvedBackend()).
 		Str("config_file", cfg.Path()).
 		Bool("runtime_config", cfg.RuntimeConfig).
 		Bool("outbox", outbox != nil).
+		Bool("auth", authMW != nil).
 		Msg("briefkasten listening")
-	if err := mcp.ServeHTTP(ctx, srv, cfg.Addr); err != nil && ctx.Err() == nil {
+	if authMW != nil {
+		err = mcp.ServeHTTPWithMiddleware(ctx, srv, cfg.Addr,
+			[]mcp.HTTPOption{briefkasten.ForwardAuthorizationHeader()},
+			mcp.WithMiddleware(authMW))
+	} else {
+		err = mcp.ServeHTTP(ctx, srv, cfg.Addr)
+	}
+	if err != nil && ctx.Err() == nil {
 		log.Error().Err(err).Msg("serve failed")
 		return 1
 	}

@@ -146,6 +146,11 @@ const (
 	InboxUIResourceURI = mcpserver.InboxUIResourceURI
 )
 
+// ForwardAuthorizationHeader is the HTTP transport option that makes the
+// Authorization header visible to the auth middleware from
+// Config.BuildAuthMiddleware. Pass both to mcp.ServeHTTPWithMiddleware.
+var ForwardAuthorizationHeader = mcpserver.ForwardAuthorizationHeader
+
 // ServerOption configures the MCP server surface.
 type ServerOption func(*serverConfig)
 

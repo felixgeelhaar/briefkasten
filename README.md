@@ -61,6 +61,7 @@ briefkasten retry  <id>       # re-queue a failed send and deliver
 briefkasten outbox            # outbound ids by lifecycle state
 briefkasten archive <id>      # prompts y/N; --yes to skip
 briefkasten delete  <id>      # prompts y/N; soft delete — to trash
+briefkasten hashpw            # argon2id hash for auth.basic.password_hash
 ```
 
 ### Human-in-the-loop curation
@@ -97,6 +98,28 @@ runtime_config: false    # enable config.get / config.set MCP tools
 Every key has an env override: `BRIEFKASTEN_ADDR`, `BRIEFKASTEN_BACKEND`,
 `BRIEFKASTEN_MAILDIR`, `BRIEFKASTEN_IMAP_ADDR` / `_USER` / `_PASSWORD` /
 `_MAILBOX` / `_INSECURE`, `BRIEFKASTEN_RUNTIME_CONFIG`.
+
+### Endpoint auth
+
+The MCP endpoint is open by default — fine on localhost. Before exposing
+the port (and especially with `runtime_config: true`), guard it with
+basic auth:
+
+```yaml
+auth:
+  basic:
+    username: alice
+    password_hash: "$argon2id$..."   # briefkasten hashpw
+    # or password: "..." — hashed (argon2id) at startup
+```
+
+Env overrides: `BRIEFKASTEN_AUTH_USER`, `BRIEFKASTEN_AUTH_PASSWORD`,
+`BRIEFKASTEN_AUTH_PASSWORD_HASH`. Generate the hash with
+`briefkasten hashpw` (reads the password from stdin). Every request must
+carry `Authorization: Basic …`; verification is constant time
+([auth-go](https://github.com/klarlabs-studio/auth-go) argon2id), failures
+are opaque, and only the MCP handshake (`initialize`, `ping`) stays open
+so clients can negotiate before presenting credentials.
 
 ### Sending
 

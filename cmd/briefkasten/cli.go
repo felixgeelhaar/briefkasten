@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	authdomain "github.com/klarlabs-studio/auth-go/domain"
+
 	"go.klarlabs.de/briefkasten"
 )
 
@@ -212,6 +214,27 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 		emit(strings.Join(lines, "\n"), summary)
 
+	case "hashpw":
+		// Read from stdin, not argv — a password argument would land in
+		// shell history.
+		fmt.Fprint(stdout, "password: ")
+		line, err := bufio.NewReader(stdin).ReadString('\n')
+		pw := strings.TrimRight(line, "\r\n")
+		if pw == "" {
+			if err != nil && err != io.EOF {
+				fmt.Fprintln(stderr, err)
+			} else {
+				fmt.Fprintln(stderr, "hashpw: empty password")
+			}
+			return 1
+		}
+		hash, err := authdomain.HashPassword(pw, authdomain.DefaultArgon2idParams())
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		emit(hash.String(), map[string]any{"password_hash": hash.String()})
+
 	case "archive", "delete":
 		id := fs.Arg(0)
 		if id == "" {
@@ -237,7 +260,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	default:
 		fmt.Fprintf(stderr, `unknown command %q
 
-usage: briefkasten [serve|list|read|seen|search|folders|send|retry|outbox|archive|delete]
+usage: briefkasten [serve|list|read|seen|search|folders|send|retry|outbox|archive|delete|hashpw]
 
 Curation is soft: archive files away, delete moves to trash — nothing is
 ever expunged. Both prompt for confirmation unless --yes.
@@ -275,7 +298,7 @@ func loadConfigPath(explicit string) (*briefkasten.Config, error) {
 
 func needsMailbox(cmd string) bool {
 	switch cmd {
-	case "send", "retry", "outbox":
+	case "send", "retry", "outbox", "hashpw":
 		return false
 	default:
 		return true
